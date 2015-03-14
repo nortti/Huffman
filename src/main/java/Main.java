@@ -1,16 +1,19 @@
 import java.util.PriorityQueue;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class Main {
+    private static HashMap<Character, String> map = new HashMap<Character, String>();
     public static void main (String[] args) {
-        char[] string = {'h', 'e', 'l', 'l', 'o', 'h', 'e', 'l', 'l', 'o'}; // TODO: Read from file
-        Arrays.sort(string); // TODO: Replace with own code
+        char[] string = {'h', 'e', 'l', 'l', 'o', 'h', 'e', 'l', 'l', 'o'};
+        char[] stringCopy = string;
+        Arrays.sort(stringCopy); // TODO: Replace with own code
         PriorityQueue<Node> queue = new PriorityQueue<Node>(); // TODO: Replace with own code
-        Node node = new Node(string[0]);
-        for (int i = 1 ; i < string.length ; i++) { // Create leaf nodes
-            if (node.c!=string[i]) {
+        Node node = new Node(stringCopy[0]);
+        for (int i = 1 ; i < stringCopy.length ; i++) { // Create leaf nodes
+            if (node.c!=stringCopy[i]) {
                 queue.add(node);
-                node = new Node(string[i]);
+                node = new Node(stringCopy[i]);
             } else {
                 node.amount++;
             }
@@ -20,7 +23,20 @@ public class Main {
         while (queue.size() > 1) {
             queue.add(new Node(queue.poll(), queue.poll())); // Construct tree
         }
+        map(queue.poll(), "");
+        System.out.println(map);
     }
+
+    public static void map(Node node, String code) {
+        if (node.leftChild==null) {
+            map.put(node.c, code);
+        } else {
+            map(node.leftChild, code + '1');
+            map(node.rightChild, code + '0');
+        }
+
+    }
+
 
     public static class Node implements Comparable<Node> {
         char c;
