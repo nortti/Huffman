@@ -35,6 +35,7 @@ public class Main {
         public Node(Node leftChild, Node rightChild) {
             this.leftChild = leftChild;
             this.rightChild = rightChild;
+            this.amount = leftChild.amount+rightChild.amount;
         }
 
         public int compareTo(Node o) {
