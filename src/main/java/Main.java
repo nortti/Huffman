@@ -16,24 +16,29 @@ public class Main {
             }
         }
         queue.add(node);
+
+        while (queue.size() > 1) {
+            queue.add(new Node(queue.poll(), queue.poll()));
+        }
     }
 
     public static class Node implements Comparable<Node> {
         char c;
         int amount = 1;
-        Node left;
-        Node right;
+        Node leftChild;
+        Node rightChild;
 
         public Node(char c) {
             this.c=c;
         }
 
-        public int compareTo(Node o) {
-            return this.amount-o.amount;
+        public Node(Node leftChild, Node rightChild) {
+            this.leftChild = leftChild;
+            this.rightChild = rightChild;
         }
 
-        public String toString() {
-            return c + "," + amount;
+        public int compareTo(Node o) {
+            return this.amount-o.amount;
         }
     }
 }
