@@ -3,25 +3,24 @@ import java.util.Arrays;
 
 public class Main {
     public static void main (String[] args) {
-        char[] s = {'h', 'e', 'l', 'l', 'o', 'h', 'e', 'l', 'l', 'o'};
-        Arrays.sort(s); // eehhlllloo
-        PriorityQueue<Node> q = new PriorityQueue();
-        Node n = new Node(s[0]);
-        for (int i = 1 ; i < s.length ; i++) {
-            if (n.c!=s[i]) {
-                q.add(n);
-                n = new Node(s[i]);
+        char[] string = {'h', 'e', 'l', 'l', 'o', 'h', 'e', 'l', 'l', 'o'};
+        Arrays.sort(string); // eehhlllloo
+        PriorityQueue<Node> queue = new PriorityQueue();
+        Node node = new Node(string[0]);
+        for (int i = 1 ; i < string.length ; i++) {
+            if (node.c!=string[i]) {
+                queue.add(node);
+                node = new Node(string[i]);
             } else {
-                n.a++;
+                node.amount++;
             }
         }
-        q.add(n);
-        System.out.println(q);
+        queue.add(node);
     }
 
     public static class Node implements Comparable<Node> {
         char c;
-        int a = 1;
+        int amount = 1;
         Node left;
         Node right;
 
@@ -30,11 +29,11 @@ public class Main {
         }
 
         public int compareTo(Node o) {
-            return this.a-o.a;
+            return this.amount-o.amount;
         }
 
         public String toString() {
-            return c + "," + a;
+            return c + "," + amount;
         }
     }
 }
