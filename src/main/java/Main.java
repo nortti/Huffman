@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 public class Main {
     private static HashMap<Character, String> map = new HashMap<Character, String>();
+    private static String treeString = "";
     public static void main (String[] args) {
         char[] string = {'h', 'e', 'l', 'l', 'o', 'h', 'e', 'l', 'l', 'o'};
         char[] stringCopy = string;
@@ -23,20 +24,23 @@ public class Main {
         while (queue.size() > 1) {
             queue.add(new Node(queue.poll(), queue.poll())); // Construct tree
         }
-        map(queue.poll(), "");
-        System.out.println(map);
+        Node root = queue.poll();
+        map(root, "");
+        System.out.print(map);
+        System.out.println(treeString);
     }
 
     public static void map(Node node, String code) {
-        if (node.leftChild==null) {
+        if (node.leftChild==null && node.rightChild == null) {
             map.put(node.c, code);
+            treeString += '1' + "" + node.c;
         } else {
+            treeString += '0';
             map(node.leftChild, code + '1');
             map(node.rightChild, code + '0');
         }
 
     }
-
 
     public static class Node implements Comparable<Node> {
         char c;
