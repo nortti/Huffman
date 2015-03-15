@@ -5,22 +5,18 @@ import java.util.HashMap;
 public class Main {
     private static HashMap<Character, String> map = new HashMap<Character, String>();
     private static String treeString = "";
+    private static int[] charFreqs = new int[128];
     public static void main (String[] args) {
         char[] string = {'h', 'e', 'l', 'l', 'o', 'h', 'e', 'l', 'l', 'o'};
-        char[] stringCopy = string;
-        Arrays.sort(stringCopy); // TODO: Replace with own code
         PriorityQueue<Node> queue = new PriorityQueue<Node>(); // TODO: Replace with own code
-        Node node = new Node(stringCopy[0]);
-        for (int i = 1 ; i < stringCopy.length ; i++) { // Create leaf nodes
-            if (node.c!=stringCopy[i]) {
-                queue.add(node);
-                node = new Node(stringCopy[i]);
-            } else {
-                node.amount++;
+        for (int i = 0 ; i < string.length ; i++) {
+            charFreqs[string[i]]++;
+        }
+        for (int i  = 0 ; i < charFreqs.length ; i++ ) {
+            if (charFreqs[i]>0) {
+                queue.add(new Node((char) i, charFreqs[i]));
             }
         }
-        queue.add(node);
-
         while (queue.size() > 1) {
             queue.add(new Node(queue.poll(), queue.poll())); // Construct tree
         }
@@ -44,22 +40,23 @@ public class Main {
 
     public static class Node implements Comparable<Node> {
         char c;
-        int amount = 1;
+        int freq;
         Node leftChild;
         Node rightChild;
 
-        public Node(char c) {
+        public Node(char c, int freq) {
             this.c=c;
+            this.freq=freq;
         }
 
         public Node(Node leftChild, Node rightChild) {
             this.leftChild = leftChild;
             this.rightChild = rightChild;
-            this.amount = leftChild.amount+rightChild.amount;
+            this.freq = leftChild.freq+rightChild.freq;
         }
 
         public int compareTo(Node o) {
-            return this.amount-o.amount;
+            return this.freq-o.freq;
         }
     }
 }
