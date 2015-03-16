@@ -67,6 +67,7 @@ public class Compresser {
     public String[] createCodes(Node node, StringBuilder code) {
         String[] codeTable = new String[128];
         if (node.getLeftChild() == null) { // Is leaf
+            System.out.println(node.getCharacter() + ":" + code.toString());
             codeTable[node.getCharacter()] = code.toString();
         } else {
             createCodes(node.getLeftChild(), code.append('0'));

@@ -4,4 +4,4 @@ task docs(type: Javadoc) {
     source = sourceSets.main.allJava
     destinationDir = reporting.file("../../Dokumentit/Javadocs/")
     }
-mainClassName = "Huffman"
+mainClassName = "huffman/Huffman"
