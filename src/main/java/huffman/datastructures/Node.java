@@ -1,4 +1,8 @@
+package huffman.datastructures;
 
+/**
+ * Class that represents the nodes of a Huffman tree.
+ **/
 public class Node implements Comparable<Node> {
 
     private char character;
@@ -6,7 +10,7 @@ public class Node implements Comparable<Node> {
     private Node leftChild;
     private Node rightChild;
 
-     public Node(char character, int freq) {
+    public Node(char character, int freq) {
         this.character = character;
         this.freq = freq;
     }
