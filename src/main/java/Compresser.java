@@ -4,9 +4,6 @@ import java.io.*;
 
 public class Compresser {
 
-    private FileOutputStream out;
-    private String tree = "";
-
     public void generate(File inputFile) throws IOException {
         FileInfo fileInfo = new FileInfo(inputFile);
         Node root = buildTree(fileInfo.getCharFreqs());
