@@ -11,18 +11,29 @@ public class Compresser {
     }
 
     private Node buildTree(int[] charFreqs) {
-        PriorityQueue<Node> queue = new PriorityQueue<Node>(); // TODO: Replace with own code
-        for (int i = 0; i < 128; i++) { // Create node for every ASCII char present in input
-            int freq = charFreqs[i];
-            if (freq > 0) queue.add(new Node((char) i, freq));
-        }
-        while (queue.size() > 1) {
-            queue.add(new Node(queue.poll(), queue.poll())); // Construct tree
+        PriorityQueue<Node> queue = createLeaves(charFreqs); // TODO: Replace PriorityQueue
+        while (queue.size() > 1) { // Construct tree
+            Node leftChild = queue.poll();
+            Node rightChild = queue.poll();
+            Node parent = new Node(leftChild, rightChild);
+            queue.add(parent);
         }
         return queue.poll();
     }
 
-    public String[] createCodes(Node node, StringBuilder code) {
+    public PriorityQueue<Node> createLeaves(int[] charFreqs) {
+        PriorityQueue<Node> leaves = new PriorityQueue();
+        for (int i = 0; i < 128; i++) {
+            int freq = charFreqs[i];
+            if (freq > 0) {
+                Node node = new Node((char) i, freq);
+                leaves.add(node);
+            }
+        }
+        return leaves;
+    }
+
+    public String[] createCodes(Node node, StringBuilder code) { // Traverses recursively
         String[] codeTable = new String[128];
         if (node.getLeftChild() == null) { // Is leaf
             codeTable[node.getCharacter()] = code.toString();
@@ -33,4 +44,3 @@ public class Compresser {
         return codeTable;
     }
 }
-
