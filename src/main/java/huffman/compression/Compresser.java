@@ -32,7 +32,7 @@ public class Compresser {
      * @param codeTable code table of the huffman tree
      * @return encoded input
      */
-    public String encodeInput(String input, String[] codeTable) {
+    public static String encodeInput(String input, String[] codeTable) {
         StringBuilder encodeInput = new StringBuilder();
         int length = input.length();
         for(int i = 0; i < length; i++) {
@@ -50,7 +50,7 @@ public class Compresser {
      * @throws IOException IO exception
      * @return The full binary code
      */
-    public byte[] generateBinaryOutput(String encodedTree, String encodedInput) throws IOException {
+    public static byte[] generateBinaryOutput(String encodedTree, String encodedInput) throws IOException {
         String output = encodedTree + "111" + encodedInput;
         // Converts String representing bytes to bytes using BigInteger
         return new BigInteger(output.toString(), 2).toByteArray();
@@ -62,7 +62,7 @@ public class Compresser {
      * @param bytes The bytes to write
      * @throws IOException IO exception
      */
-    public void writeToOutputFile(File file, byte[] bytes) throws IOException {
+    public static void writeToOutputFile(File file, byte[] bytes) throws IOException {
         file.createNewFile();
         FileOutputStream outputStream = new FileOutputStream(file);
         outputStream.write(bytes);

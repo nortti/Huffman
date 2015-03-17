@@ -55,7 +55,7 @@ public class HuffmanTree {
     }
 
    /**
-    * Traverses the Huffman tree recursively, assigning a binary code  to each leaf, as well as
+    * Traverses the Huffman tree recursively, assigning a binary code to each leaf, as well as
     * constructing the encoded String representation of the tree.
     * @param node current node
     * @param code binary code
