@@ -15,6 +15,7 @@ public class Compresser {
     /**
      * Method that controls the compression process.
      * @param inputFile The input file
+     * @param outputFile The output file
      * @throws IOException IO Exception
      */
     public void generateCompressed(File inputFile, File outputFile) throws IOException {
@@ -43,9 +44,10 @@ public class Compresser {
     }
 
     /**
-     * Generates the binary code to be written into the output file. 
+     * Generates the binary code to be written into the output file.
      * @param encodedTree The encoded tree
      * @param encodedInput The encoded input
+     * @throws IOException IO exception
      * @return The full binary code
      */
     public byte[] generateBinaryOutput(String encodedTree, String encodedInput) throws IOException {
@@ -58,6 +60,7 @@ public class Compresser {
      * Creates and writes the compressed file.
      * @param file The output file
      * @param bytes The bytes to write
+     * @throws IOException IO exception
      */
     public void writeToOutputFile(File file, byte[] bytes) throws IOException {
         file.createNewFile();

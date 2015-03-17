@@ -17,6 +17,7 @@ public class InputInfo {
     /**
      * Calls the method that initializes chafFreqs and contents by reading the input file.
      * @param file The input file
+     * @throws IOException IO Exception
      */
     public InputInfo(File file) throws IOException {
         generateInfo(new FileInputStream(file));
@@ -26,6 +27,7 @@ public class InputInfo {
      * The file is read byte by byte (char by char) as we build a String of its contents and set
      * up a table of character frequencies.
      * @param inputStream A stream of the input file
+     * @throws IOException IO exception
      */
     private void generateInfo(FileInputStream inputStream) throws IOException {
         int r;
