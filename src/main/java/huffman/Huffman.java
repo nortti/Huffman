@@ -4,7 +4,7 @@ import huffman.compression.Compresser;
 import java.io.*;
 
 /**
- * The main class which specifies an input and an output file for compression  or decompression,
+ * The main class which specifies an input and an output file for compression or decompression,
  * depending on user input (to be implemented).
  */
 public class Huffman {
@@ -15,6 +15,6 @@ public class Huffman {
         File inputFile = new File(inputPath);
         File outputFile = new File(outputPath);
         Compresser compresser = new Compresser();
-        compresser.generateCompressed(inputFile, outputFile);
+        compresser.compress(inputFile, outputFile);
     }
 }
