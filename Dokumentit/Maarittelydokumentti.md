@@ -1,27 +1,30 @@
-#Määrittelydokumentti
+# Määrittelydokumentti
 
-Toteutan Huffman-koodauksen. Ohjelmalla tulee pystyä pakkaamaan ja purkamaan tekstitiedostoja.
+#### Algoritmit ja tietorakenteet
 
-####Algoritmit ja tietorakenteet####
+Toteutan **(Huffmanin koodausalgoritmin** ohjelmaan jolla pakataan ja puretaan tiedostoja. Algoritmissä
+käytetyt tietorakenteet ovat **binääripuu** ja **keko**.
 
-Toteutan Huffman-pakkaamis ja -purkualgoritmit. Algoritmeissä käytetään ainakin binääripuuta ja
-prioriteettijonoa, mahdollisesti käytännössä myös jonkinlaisia hajautustietorakenteita- ja algoritmeja.
+#### Minkä ongelman ratkaisen ja miksi
 
-####Minkä ongelman ratkaisen ja miksi####
+Ongelma, jonka jonka ratkaisen on: kuinka pakata tekstitiedosto optimaalisesti. Valitsin sen koska
+se vaikuttaa mielenkiintoiselta ongelmalta. Alkutapaamisessa mainittiin Huffmanin koodaus yhtenä
+mahdollisuutena, ja tutustuttuani algoritmiin totesin sen olevan sopiva.
 
-Koodi, jonka toteutan on eräänlainen ratkaisu tiedon tiivistys-ongelmaan. Aihetta ehdotettiin kurssisivulla, ja
-se vaikutti mielenkiintoiselta. Alkutapaamisessa mainittiin Huffman-koodi yhtenä mahdollisuutena. 
+#### Mitä syötteitä ohjelma saa ja miten näitä käytetään
 
-####Mitä syötteitä ohjelma saa ja miten näitä käytetään####
+Ohjelma saa syötteenä nimen pakattavalle tiedostolle joka pitää purkaa, tai nimen puretulle tiedostolle,
+joka pitää pakata.
 
-Ohjelma saa syötteenä teksitiedoston nimen, jonka se pakkaa uudeksi tiedostoksi, tai pakatun tiedoston jonka se
-purkaa tavalliseksi tekstitiedostoksi.
+#### Tavoitteena olevat aika-ja tilavaativuudet
 
-####Tavoitteena olevat aika-ja tilavaativuudet####
+*n* = merkkien määrä alkuperäisessä tiedostossa
 
-Aikavaativuus: O(_n_ log _n_)   
-Tilavaativuus: O(_n_)
+Aikavaativuus: O(*n* log *n*). Perustelu: Pinoon lisäämisen aikavaativuus on O(log *n*), ja
+operaatio tehdään pahimmassa tapauksessa _n_ kertaa.
 
-####Lähteet####
+Tilavaativuus: O(_n_). Perustelu: Algoritmi luo puun jossa on maksimissaan 2*n* - 1 alkiota.
+
+#### Lähteet
 
 http://en.wikipedia.org/wiki/Huffman_coding

@@ -18,29 +18,29 @@ public class Compresser {
      * @param outputFile The output file
      * @throws IOException IO Exception
      */
-    public void generateCompressed(File inputFile, File outputFile) throws IOException {
+    public void compress(File inputFile, File outputFile) throws IOException {
         InputInfo inputInfo = new InputInfo(inputFile);
         HuffmanTree huffmanTree = new HuffmanTree(inputInfo.getCharFreqs());
-        String encodedInput = encodeInput(inputInfo.getContents(), huffmanTree.getCodeTable());
+        String encodedInput = encodeString(inputInfo.getContents(), huffmanTree.getCodeTable());
         byte[] binaryOutput = generateBinaryOutput(huffmanTree.getEncoded(), encodedInput);
         writeToOutputFile(outputFile, binaryOutput);
     }
 
     /**
-     * Encodes the input using the code table of the huffman tree.
-     * @param input Contents of the input file
-     * @param codeTable code table of the huffman tree
-     * @return encoded input
+     * Encodes a String using the code table of a Huffman tree.
+     * @param string String to encode
+     * @param codeTable Code table of a Huffman tree
+     * @return Encoded string
      */
-    public static String encodeInput(String input, String[] codeTable) {
-        StringBuilder encodeInput = new StringBuilder();
-        int length = input.length();
+    public static String encodeString(String string, String[] codeTable) {
+        StringBuilder stringBuilder = new StringBuilder();
+        int length = string.length();
         for(int i = 0; i < length; i++) {
-            int charAsInt = (int) input.charAt(i);
-            String code = codeTable[charAsInt];
-            encodeInput.append(code);
+            char character = string.charAt(i);
+            String code = codeTable[(int) character];
+            stringBuilder.append(code);
          }
-        return encodeInput.toString();
+        return stringBuilder.toString();
     }
 
     /**
@@ -51,7 +51,7 @@ public class Compresser {
      * @return The full binary code
      */
     public static byte[] generateBinaryOutput(String encodedTree, String encodedInput) throws IOException {
-        String output = encodedTree + "111" + encodedInput;
+        String output = encodedTree + "111" + encodedInput + "111";
         // Converts String representing bytes to bytes using BigInteger
         return new BigInteger(output.toString(), 2).toByteArray();
     }
