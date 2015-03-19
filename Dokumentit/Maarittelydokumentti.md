@@ -27,4 +27,4 @@ Tilavaativuus: O(*n*). Perustelu: Algoritmi luo puun jossa on maksimissaan 2*n* 
 
 #### Lähteet
 
-http://en.wikipedia.org/wiki/Huffman\_coding
+http://en.wikipedia.org/wiki/Huffman_coding
