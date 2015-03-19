@@ -2,8 +2,13 @@
 
 #### Algoritmit ja tietorakenteet
 
+<<<<<<< HEAD
 Toteutan **(Huffmanin koodausalgoritmin** ohjelmaan jolla pakataan ja puretaan tiedostoja. Algoritmissä
 käytetyt tietorakenteet ovat **binääripuu** ja **keko**.
+=======
+Toteutan *Huffmanin koodausalgoritmin* ohjelmaan jolla pakataan ja puretaan tiedostoja. Algoritmissä
+käytetyt tietorakenteet ovat *binääripuu* ja *keko*.
+>>>>>>> 2b168e5fcb19c8689d751408e144c3fddfa94430
 
 #### Minkä ongelman ratkaisen ja miksi
 
@@ -18,10 +23,11 @@ joka pitää pakata.
 
 #### Tavoitteena olevat aika-ja tilavaativuudet
 
+<<<<<<< HEAD
 *n* = merkkien määrä alkuperäisessä tiedostossa
 
 Aikavaativuus: O(*n* log *n*). Perustelu: Pinoon lisäämisen aikavaativuus on O(log *n*), ja
-operaatio tehdään pahimmassa tapauksessa _n_ kertaa.
+operaatio tehdään pahimmassa tapauksessa *n* kertaa.
 
 Tilavaativuus: O(_n_). Perustelu: Algoritmi luo puun jossa on maksimissaan 2*n* - 1 alkiota.
 
