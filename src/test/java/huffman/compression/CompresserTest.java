@@ -49,7 +49,7 @@ public class CompresserTest {
         String encodedTree = "0101100001101100010";
         String encodedInput = "010101";
         byte[] binaryOutput = Compresser.generateBinaryOutput(encodedTree, encodedInput);
-        assertTrue(java.util.Arrays.equals(binaryOutput, BigInteger.valueOf(92718556).toByteArray()));
+        assertTrue(java.util.Arrays.equals(binaryOutput, BigInteger.valueOf(92718549).toByteArray()));
     }
 
     @Test
