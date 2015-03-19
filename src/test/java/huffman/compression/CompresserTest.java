@@ -28,7 +28,7 @@ public class CompresserTest {
     public void generatesCompressedFileWhenInputNotEmpty() throws IOException {
         writer.println("abc");
         writer.close();
-        compresser.generateCompressed(inputFile, outputFile);
+        compresser.compress(inputFile, outputFile);
         assertTrue(outputFile.length() != 0);
     }
 
@@ -41,7 +41,7 @@ public class CompresserTest {
         codeTable['b'] = "11";
         codeTable['y'] = "000";
         codeTable['c'] = "01";
-        assertTrue(Compresser.encodeInput(input, codeTable).equals( "1011011110"));
+        assertTrue(Compresser.encodeString(input, codeTable).equals( "1011011110"));
     }
 
     @Test
@@ -49,7 +49,7 @@ public class CompresserTest {
         String encodedTree = "0101100001101100010";
         String encodedInput = "010101";
         byte[] binaryOutput = Compresser.generateBinaryOutput(encodedTree, encodedInput);
-        assertTrue(java.util.Arrays.equals(binaryOutput, BigInteger.valueOf(92718549).toByteArray()));
+        assertTrue(java.util.Arrays.equals(binaryOutput, BigInteger.valueOf(92718556).toByteArray()));
     }
 
     @Test
