@@ -7,7 +7,7 @@ task docs(type: Javadoc) {
     source = sourceSets.main.allJava
     destinationDir = reporting.file("../../Dokumentit/Javadocs/")
     }
-mainClassName = "huffman/Huffman"
+mainClassName = "huffman/Main"
 dependencies {
   testCompile group: 'junit', name: 'junit', version: '4.11'
 }

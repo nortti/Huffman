@@ -1,6 +1,6 @@
 package huffman.compression;
 
-import huffman.compression.tools.InputInfo;
+import huffman.compression.tools.FileInfo;
 import huffman.datastructures.*;
 import java.io.*;
 import java.lang.StringBuilder;
@@ -14,16 +14,19 @@ public class Compresser {
 
     /**
      * Method that controls the compression process.
-     * @param inputFile The input file
-     * @param outputFile The output file
+     * @param file The input file
      * @throws IOException IO Exception
      */
-    public void compress(File inputFile, File outputFile) throws IOException {
-        InputInfo inputInfo = new InputInfo(inputFile);
-        HuffmanTree huffmanTree = new HuffmanTree(inputInfo.getCharFreqs());
-        String encodedInput = encodeString(inputInfo.getContents(), huffmanTree.getCodeTable());
-        byte[] binaryOutput = generateBinaryOutput(huffmanTree.getEncoded(), encodedInput);
-        writeToOutputFile(outputFile, binaryOutput);
+    public static File compress(File file) throws IOException {
+        FileInfo fileInfo = new FileInfo(file);
+        HuffmanTree huffmanTree = new HuffmanTree(fileInfo.getCharFreqs());
+        String encodedInput = encodeString(fileInfo.getContents(), huffmanTree.getCodeTable());
+        byte[] binaryOutput = huffmanTree.getEncoded();
+        // byte[] binaryOutput = generateBinaryOutput(huffmanTree.getEncoded(), encodedInput);
+        System.out.println(java.util.Arrays.toString(binaryOutput));
+        File outputFile = new File(file.getPath() + ".huf");
+        writeOutputFile(outputFile, binaryOutput);
+        return outputFile;
     }
 
     /**
@@ -52,6 +55,7 @@ public class Compresser {
      */
     public static byte[] generateBinaryOutput(String encodedTree, String encodedInput) throws IOException {
         String output = encodedTree + "111" + encodedInput + "111";
+        System.out.println(output);
         // Converts String representing bytes to bytes using BigInteger
         return new BigInteger(output.toString(), 2).toByteArray();
     }
@@ -62,9 +66,9 @@ public class Compresser {
      * @param bytes The bytes to write
      * @throws IOException IO exception
      */
-    public static void writeToOutputFile(File file, byte[] bytes) throws IOException {
+    public static void writeOutputFile(File file, byte[] data) throws IOException {
         file.createNewFile();
         FileOutputStream outputStream = new FileOutputStream(file);
-        outputStream.write(bytes);
+        outputStream.write(data);
     }
 }

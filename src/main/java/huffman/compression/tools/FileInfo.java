@@ -6,10 +6,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
- * The class where, during compression, the original file is read  and the required information for
+ * The class where, during compression, the original file is read and the required information for
  * compression is stored.
  */
-public class InputInfo {
+public class FileInfo {
 
     private int[] charFreqs = new int[128];
     private StringBuilder contents = new StringBuilder();
@@ -19,7 +19,7 @@ public class InputInfo {
      * @param file The input file
      * @throws IOException IO Exception
      */
-    public InputInfo(File file) throws IOException {
+    public FileInfo(File file) throws IOException {
         generateInfo(new FileInputStream(file));
     }
 

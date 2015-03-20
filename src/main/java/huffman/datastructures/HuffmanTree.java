@@ -1,14 +1,14 @@
 package huffman.datastructures;
 
+import huffman.io.BitWriter;
 import java.util.PriorityQueue;
-import java.lang.StringBuilder;
 
 /**
  * Class that builds a Huffman tree and supplies the encodings generated from traversing it
  */
 public class HuffmanTree {
 
-    private StringBuilder encoded = new StringBuilder();
+    private byte[] encoded;
     private String[] codeTable = new String[128];
 
     /**
@@ -18,7 +18,9 @@ public class HuffmanTree {
     public HuffmanTree (int[] charFreqs) {
         PriorityQueue<Node> minHeap = createLeaves(charFreqs);
         Node root = buildTree(minHeap);
-        createCodes(root, new StringBuilder());
+        BitWriter bitWriter = new BitWriter();
+        createCodes(root, "", bitWriter);
+        this.encoded = bitWriter.read();
     }
 
     /**
@@ -61,19 +63,15 @@ public class HuffmanTree {
     * @param code binary code
     * @return a table with a binary code for each character
     */
-    private void createCodes(Node node, StringBuilder code) {
+    private void createCodes(Node node, String code, BitWriter bitWriter) {
         if (node.getLeftChild() == null) { // Is leaf
             this.codeTable[node.getCharacter()] = code.toString();
-            this.encoded.append('1');
-            String binaryAsciiChar = Integer.toBinaryString(node.getCharacter());
-            for (int i = 0; i < 8 - binaryAsciiChar.length(); i++) {
-                this.encoded.append('0');
-            }
-            this.encoded.append(binaryAsciiChar);
+            bitWriter.write(true);
+            bitWriter.write(node.getCharacter());
         } else {
-            this.encoded.append('0');
-            createCodes(node.getLeftChild(), new StringBuilder(code).append('0'));
-            createCodes(node.getRightChild(), new StringBuilder(code).append('1'));
+            bitWriter.write(false);
+            createCodes(node.getLeftChild(), code += '0', bitWriter);
+            createCodes(node.getRightChild(), code += '1', bitWriter);
         }
     }
 
@@ -81,7 +79,7 @@ public class HuffmanTree {
         return this.codeTable;
     }
 
-    public String getEncoded() {
-        return this.encoded.toString();
+    public byte[] getEncoded() {
+        return this.encoded;
     }
 }
