@@ -12,10 +12,12 @@ import java.io.IOException;
 public class Main {
 
     public static void main (String[] args) throws IOException {
+        // For testing, will handle input form args later
         String path = "src/main/resources/Example.txt";
         File file = new File(path);
-        File compressedFile = Compresser.compress(file);
-        Decompresser.decompress(compressedFile);
-
+        Compresser.compress(file);
+        path += ".huf";
+        file = new File(path);
+        Decompresser.decompress(file);
     }
 }

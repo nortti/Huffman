@@ -35,7 +35,7 @@ public class BitReader {
             }
             // Separator
             if (b < 0) {
-                return 50;
+                return b;
             }
         }
         return b;
