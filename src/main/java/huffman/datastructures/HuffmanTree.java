@@ -1,6 +1,6 @@
 package huffman.datastructures;
 
-import huffman.io.BitWriter;
+import huffman.io.BitReader;
 import java.util.PriorityQueue;
 
 /**
@@ -8,8 +8,8 @@ import java.util.PriorityQueue;
  */
 public class HuffmanTree {
 
-    private byte[] encoded;
-    private String[] codeTable = new String[128];
+    private String[] codes = new String[128];
+    private Node root;
 
     /**
      * Calls for the construction of a Huffman tree and the codes related to it.
@@ -17,10 +17,13 @@ public class HuffmanTree {
      */
     public HuffmanTree (int[] charFreqs) {
         PriorityQueue<Node> minHeap = createLeaves(charFreqs);
-        Node root = buildTree(minHeap);
-        BitWriter bitWriter = new BitWriter();
-        createCodes(root, "", bitWriter);
-        this.encoded = bitWriter.read();
+        this.root = buildTree(minHeap);
+        setCodes(root, "");
+    }
+
+    public HuffmanTree(BitReader bitReader) {
+        this.root = decodeTree(bitReader);
+        setCodes(root, "");
     }
 
     /**
@@ -31,13 +34,15 @@ public class HuffmanTree {
      */
     private PriorityQueue<Node> createLeaves(int[] charFreqs) {
         PriorityQueue<Node> leaves = new PriorityQueue<Node>();
-        for (int i = 0; i < 128; i++) {
-            int freq = charFreqs[i];
+        for (int charInt = 0; charInt < 128; charInt++) {
+            int freq = charFreqs[charInt];
             if (freq > 0) {
-                Node node = new Node((char) i, freq);
+                Node node = new Node((char) charInt, freq);
                 leaves.add(node);
             }
         }
+        // EOF char
+        leaves.add(new Node((char)0, 0));
         return leaves;
     }
 
@@ -58,28 +63,41 @@ public class HuffmanTree {
 
    /**
     * Traverses the Huffman tree recursively, assigning a binary code to each leaf, as well as
-    * constructing the encoded String representation of the tree.
+    * constructing the encoded bit representation of the tree.
     * @param node current node
     * @param code binary code
     * @return a table with a binary code for each character
     */
-    private void createCodes(Node node, String code, BitWriter bitWriter) {
+    private void setCodes(Node node, String code) {
         if (node.getLeftChild() == null) { // Is leaf
-            this.codeTable[node.getCharacter()] = code.toString();
-            bitWriter.write(true);
-            bitWriter.write(node.getCharacter());
+            this.codes[node.getCharacter()] = code;
         } else {
-            bitWriter.write(false);
-            createCodes(node.getLeftChild(), code += '0', bitWriter);
-            createCodes(node.getRightChild(), code += '1', bitWriter);
+            setCodes(node.getLeftChild(), code + '0');
+            setCodes(node.getRightChild(), code + '1');
         }
     }
 
-    public String[] getCodeTable() {
-        return this.codeTable;
+    public Node decodeTree(BitReader bitReader) {
+        boolean isSet = bitReader.read();
+        if (isSet) {
+            char character = (char) bitReader.readByte();
+            if ((int) character < 0) {
+                return null;
+            }
+            return new Node(character, 0);
+        } else {
+            Node leftChild = decodeTree(bitReader);
+            Node rightChild = decodeTree(bitReader);
+            Node parent = new Node(leftChild, rightChild);
+            return parent;
+        }
     }
 
-    public byte[] getEncoded() {
-        return this.encoded;
+    public String[] getCodes() {
+        return this.codes;
+    }
+
+    public Node getRoot() {
+        return this.root;
     }
 }

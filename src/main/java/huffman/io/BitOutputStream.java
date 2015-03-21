@@ -2,7 +2,7 @@ package huffman.io;
 
 import java.io.ByteArrayOutputStream;
 
-public class BitWriter {
+public class BitOutputStream {
 
     private ByteArrayOutputStream out = new ByteArrayOutputStream();
     private byte workingByte = 0;
@@ -12,7 +12,7 @@ public class BitWriter {
         workingByte <<= 1;
         if (isOn) workingByte++;
         bitCounter++;
-        if (bitCounter == 9) {
+        if (bitCounter == 8) {
             out.write(workingByte);
             workingByte = 0;
             bitCounter = 0;
@@ -27,6 +27,7 @@ public class BitWriter {
     }
 
     public byte[] read() {
+        workingByte <<= 8-bitCounter;
         out.write(workingByte);
         return out.toByteArray();
     }

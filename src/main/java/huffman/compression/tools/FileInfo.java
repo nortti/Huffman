@@ -12,7 +12,7 @@ import java.io.IOException;
 public class FileInfo {
 
     private int[] charFreqs = new int[128];
-    private StringBuilder contents = new StringBuilder();
+    private StringBuilder string = new StringBuilder();
 
     /**
      * Calls the method that initializes chafFreqs and contents by reading the input file.
@@ -30,10 +30,10 @@ public class FileInfo {
      * @throws IOException IO exception
      */
     private void generateInfo(FileInputStream inputStream) throws IOException {
-        int r;
-        while ((r = inputStream.read()) != -1) {
-            contents.append((char) r);
-            charFreqs[r]++;
+        int charInt;
+        while ((charInt = inputStream.read()) != -1) {
+            this.string.append((char) charInt);
+            this.charFreqs[charInt]++;
         }
     }
 
@@ -41,7 +41,7 @@ public class FileInfo {
         return this.charFreqs;
     }
 
-    public String getContents() {
-        return this.contents.toString();
+    public String getString() {
+        return this.string.toString();
     }
 }

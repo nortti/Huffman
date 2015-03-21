@@ -9,7 +9,7 @@ import java.io.IOException;
 public class BitReader {
 
     private byte[] data;
-    private byte bytePointer = 0;
+    private int bytePointer = 0;
     private int mask = 128;
 
     public BitReader(File file) throws IOException {
@@ -18,7 +18,6 @@ public class BitReader {
     }
 
     public boolean read() {
-        if (bytePointer > data.length) return false;
         boolean isSet = (data[bytePointer] & mask) != 0;
         mask >>>= 1;
         if (mask == 0) {
@@ -34,8 +33,11 @@ public class BitReader {
             if (this.read()) {
                 b += mask;
             }
+            // Separator
+            if (b < 0) {
+                return 50;
+            }
         }
-        System.out.println();
         return b;
     }
 }
