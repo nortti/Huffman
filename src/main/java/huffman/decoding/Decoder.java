@@ -1,16 +1,12 @@
-package huffman.decompression;
+package huffman.decoding;
 
-import huffman.datastructures.HuffmanTree;
-import huffman.datastructures.Node;
+import static huffman.io.FileChanger.CHARSET_SIZE;
 import huffman.io.BitReader;
-import java.nio.file.Files;
-import java.io.File;
-import java.io.IOException;
+import huffman.datastructures.HuffmanTree;
 
-public class Decompresser {
-
-    public static void decompress(File file) throws IOException {
-        BitReader bitReader = new BitReader(file);
+public class Decoder {
+    public static byte[] decode(byte[] data) {
+        BitReader bitReader = new BitReader(data);
         HuffmanTree huffmanTree = new HuffmanTree(bitReader);
         String decoded = "";
         String code = "";
@@ -22,7 +18,7 @@ public class Decompresser {
             } else {
                 code += '1';
             }
-            for (int i = 0; i < 128; i++) {
+            for (int i = 0; i < CHARSET_SIZE; i++) {
                 String workingCode = huffmanTree.getCodes()[i];
                 if (workingCode != null && workingCode.equals(code)) {
                     if (i == 0) {
@@ -37,5 +33,6 @@ public class Decompresser {
             }
         }
         System.out.println(decoded);
+        return new byte[1];
     }
 }

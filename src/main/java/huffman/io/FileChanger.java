@@ -1,6 +1,7 @@
-package huffman.compression;
+package huffman.io;
 
-import huffman.compression.tools.Encoder;
+import huffman.encoding.Encoder;
+import huffman.decoding.Decoder;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -8,18 +9,36 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class Compresser {
+public class FileChanger {
 
-    public static void compress(File inputFile) throws IOException {
+    public static final int CHARSET_SIZE = 256;
+
+    public static void compress(File file) throws IOException {
+        boolean compress = true;
+        changeFile(file, compress);
+    }
+
+    public static void decompress(File file) throws IOException {
+        boolean compress = false;
+        changeFile(file, compress);
+    }
+
+    private static void changeFile(File inputFile, boolean compress) throws IOException {
         Path inputFilePath = Paths.get(inputFile.getPath());
         byte[] inputData = Files.readAllBytes(inputFilePath);
-        byte[] outputData  = Encoder.encode(inputData);
+        byte[] outputData;
+        if (compress) {
+            outputData  = Encoder.encode(inputData);
+        } else {
+            outputData  = Decoder.decode(inputData);
+        }
         File outputFile = createOutputFile(inputFile.getPath());
         writeToOutputFile(outputFile, outputData);
     }
 
     private static File createOutputFile(String inputFilePath) throws IOException {
-        String path = inputFilePath + ".huf";
+        // TODO change file extention
+        String path = inputFilePath;
         File outputFile = new File(path);
         outputFile.createNewFile();
         return outputFile;

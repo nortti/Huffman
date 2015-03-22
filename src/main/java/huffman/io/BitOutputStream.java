@@ -12,23 +12,28 @@ public class BitOutputStream {
         workingByte <<= 1;
         if (isOn) workingByte++;
         bitCounter++;
+
         if (bitCounter == 8) {
-            out.write(workingByte);
-            workingByte = 0;
-            bitCounter = 0;
+            writeAndReset();
         }
     }
 
+    private void writeAndReset() {
+        out.write(workingByte);
+        workingByte = 0;
+        bitCounter = 0;
+    }
+
     public void write(char character) {
-        byte charByte = (byte)character;
-        for (int mask = 128; mask > 0; mask >>>= 1) {
-            write((charByte & mask) != 0);
+        for (int mask = 128; mask != 0; mask >>>= 1) {
+            write((character & mask) != 0);
         }
     }
 
     public byte[] read() {
         workingByte <<= 8-bitCounter;
         out.write(workingByte);
-        return out.toByteArray();
+        byte[] data = out.toByteArray();
+        return data;
     }
 }

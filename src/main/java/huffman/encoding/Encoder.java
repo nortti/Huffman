@@ -1,18 +1,15 @@
-package huffman.compression.tools;
+package huffman.encoding;
 
+import static huffman.io.FileChanger.CHARSET_SIZE;
 import huffman.io.BitOutputStream;
-import huffman.compression.tools.DataInfo;
 import huffman.datastructures.HuffmanTree;
 import huffman.datastructures.Node;
-import java.io.File;
-import java.io.IOException;
 
 public class Encoder {
 
-    public static byte[] encode(byte[] inputData) throws IOException {
-        DataInfo dataInfo = new DataInfo(inputData);
-        int[] charFreqs = dataInfo.getCharFreqs();
-        String inputString = dataInfo.getString();
+    public static byte[] encode(byte[] inputData) {
+        String inputString = new String(inputData);
+        int[] charFreqs = countCharFreqs(inputString);
 
         HuffmanTree huffmanTree = new HuffmanTree(charFreqs);
         Node root = huffmanTree.getRoot();
@@ -22,12 +19,22 @@ public class Encoder {
         return outputData;
     }
 
+    private static int[] countCharFreqs(String string) {
+        int[] charFreqs = new int[CHARSET_SIZE];
+
+        for (int i = 0; i < string.length(); i++) {
+            charFreqs[string.charAt(i)]++;
+        }
+
+        return charFreqs;
+    }
+
     private static byte[] createOutput(Node root, String string, String[] codes) {
         BitOutputStream bitOutputStream = new BitOutputStream();
 
         writeEncodedTree(root, bitOutputStream);
         writeEncodedMessage(string, codes, bitOutputStream);
-        writeEOFCode(codes[0], bitOutputStream);
+        writeEncodedChar((char)0, codes[0], bitOutputStream); // EOF Code
 
         return bitOutputStream.read();
     }
@@ -47,22 +54,16 @@ public class Encoder {
         for(int i = 0; i < string.length(); i++) {
             char character = string.charAt(i);
             String code = codes[(int)character];
-            for (int bit = 0; bit < code.length(); bit++) {
-                if (code.charAt(bit) == '1') {
-                    bitOutputStream.write(true);
-                } else {
-                    bitOutputStream.write(false);
-                }
-            }
+            writeEncodedChar(character, code, bitOutputStream);
          }
     }
 
-    private static void writeEOFCode(String code, BitOutputStream bitOutputStream) {
+    private static void writeEncodedChar(char character, String code, BitOutputStream bitOutputStream) {
         for (int i = 0; i < code.length(); i++) {
-            if (code.charAt(i) == '1') {
-                bitOutputStream.write(true);
-            } else {
+            if (code.charAt(i) == '0') {
                 bitOutputStream.write(false);
+            } else {
+                bitOutputStream.write(true);
             }
         }
     }

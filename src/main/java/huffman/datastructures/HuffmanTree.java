@@ -1,5 +1,6 @@
 package huffman.datastructures;
 
+import static huffman.io.FileChanger.CHARSET_SIZE;
 import huffman.io.BitReader;
 import java.util.PriorityQueue;
 
@@ -8,7 +9,7 @@ import java.util.PriorityQueue;
  */
 public class HuffmanTree {
 
-    private String[] codes = new String[128];
+    private String[] codes = new String[CHARSET_SIZE];
     private Node root;
 
     /**
@@ -27,14 +28,14 @@ public class HuffmanTree {
     }
 
     /**
-     * Goes through all 128 characters in the ASCII table, while creating and enqueueing a node for
+     * Goes through all 256 characters in the extended ASCII table, while creating and enqueueing a node for
      * every character with a frequency greater than 0.
-     * @param charFreqs table containing frequencies for all 128 ASCII characters
+     * @param charFreqs table containing frequencies for all 256 ASCII characters
      * @return Min-heap of all leaves
      */
     private PriorityQueue<Node> createLeaves(int[] charFreqs) {
         PriorityQueue<Node> leaves = new PriorityQueue<Node>();
-        for (int charInt = 0; charInt < 128; charInt++) {
+        for (int charInt = 0; charInt < charFreqs.length; charInt++) {
             int freq = charFreqs[charInt];
             if (freq > 0) {
                 Node node = new Node((char) charInt, freq);
@@ -80,10 +81,7 @@ public class HuffmanTree {
     public Node decodeTree(BitReader bitReader) {
         boolean isSet = bitReader.read();
         if (isSet) {
-            char character = (char) bitReader.readByte();
-            if ((int) character < 0) {
-                return null;
-            }
+            char character = (char)bitReader.readByte();
             return new Node(character, 0);
         } else {
             Node leftChild = decodeTree(bitReader);

@@ -1,7 +1,6 @@
 package huffman;
 
-import huffman.compression.Compresser;
-import huffman.decompression.Decompresser;
+import huffman.io.FileChanger;
 import java.io.File;
 import java.io.IOException;
 
@@ -15,9 +14,9 @@ public class Main {
         // For testing, will handle input form args later
         String path = "src/main/resources/Example.txt";
         File file = new File(path);
-        Compresser.compress(file);
+        FileChanger.compress(file);
         path += ".huf";
         file = new File(path);
-        Decompresser.decompress(file);
+        FileChanger.decompress(file);
     }
 }
