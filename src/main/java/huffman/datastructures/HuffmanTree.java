@@ -1,7 +1,7 @@
 package huffman.datastructures;
 
 import static huffman.io.FileChanger.CHARSET_SIZE;
-import huffman.io.BitReader;
+import huffman.io.BitInputStream;
 import java.util.PriorityQueue;
 
 /**
@@ -22,8 +22,8 @@ public class HuffmanTree {
         setCodes(root, "");
     }
 
-    public HuffmanTree(BitReader bitReader) {
-        this.root = decodeTree(bitReader);
+    public HuffmanTree(BitInputStream bitInputStream) {
+        this.root = decodeTree(bitInputStream);
         setCodes(root, "");
     }
 
@@ -38,7 +38,8 @@ public class HuffmanTree {
         for (int charInt = 0; charInt < charFreqs.length; charInt++) {
             int freq = charFreqs[charInt];
             if (freq > 0) {
-                Node node = new Node((char) charInt, freq);
+                System.out.println(charInt);
+                Node node = new Node((char)charInt, freq);
                 leaves.add(node);
             }
         }
@@ -78,14 +79,14 @@ public class HuffmanTree {
         }
     }
 
-    public Node decodeTree(BitReader bitReader) {
-        boolean isSet = bitReader.read();
+    public Node decodeTree(BitInputStream bitInputStream) {
+        boolean isSet = bitInputStream.read();
         if (isSet) {
-            char character = (char)bitReader.readByte();
+            char character = (char)bitInputStream.readByte();
             return new Node(character, 0);
         } else {
-            Node leftChild = decodeTree(bitReader);
-            Node rightChild = decodeTree(bitReader);
+            Node leftChild = decodeTree(bitInputStream);
+            Node rightChild = decodeTree(bitInputStream);
             Node parent = new Node(leftChild, rightChild);
             return parent;
         }

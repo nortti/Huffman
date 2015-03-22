@@ -1,18 +1,19 @@
 package huffman.decoding;
 
 import static huffman.io.FileChanger.CHARSET_SIZE;
-import huffman.io.BitReader;
+import huffman.io.BitInputStream;
 import huffman.datastructures.HuffmanTree;
 
 public class Decoder {
+
     public static byte[] decode(byte[] data) {
-        BitReader bitReader = new BitReader(data);
-        HuffmanTree huffmanTree = new HuffmanTree(bitReader);
+        BitInputStream bitInputStream = new BitInputStream(data);
+        HuffmanTree huffmanTree = new HuffmanTree(bitInputStream);
         String decoded = "";
         String code = "";
         boolean EOF = false;
         while (!EOF) {
-            boolean isSet = bitReader.read();
+            boolean isSet = bitInputStream.read();
             if (!isSet) {
                 code += '0';
             } else {
@@ -32,7 +33,6 @@ public class Decoder {
                 }
             }
         }
-        System.out.println(decoded);
-        return new byte[1];
+        return decoded.getBytes();
     }
 }

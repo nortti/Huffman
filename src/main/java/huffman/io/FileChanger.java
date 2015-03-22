@@ -32,12 +32,11 @@ public class FileChanger {
         } else {
             outputData  = Decoder.decode(inputData);
         }
-        File outputFile = createOutputFile(inputFile.getPath());
+        File outputFile = createOutputFile(inputFile.getPath(), compress);
         writeToOutputFile(outputFile, outputData);
     }
 
-    private static File createOutputFile(String inputFilePath) throws IOException {
-        // TODO change file extention
+    private static File createOutputFile(String inputFilePath, boolean compress) throws IOException {
         String path = inputFilePath;
         File outputFile = new File(path);
         outputFile.createNewFile();

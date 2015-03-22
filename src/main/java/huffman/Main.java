@@ -1,22 +1,26 @@
 package huffman;
 
 import huffman.io.FileChanger;
+import java.nio.file.NoSuchFileException;
 import java.io.File;
 import java.io.IOException;
 
 /**
- * The main class which specifies an input and an output file for compression or decompression,
- * depending on user input (to be implemented).
+ * -
  */
 public class Main {
 
-    public static void main (String[] args) throws IOException {
+    public static void main (String[] args) {
         // For testing, will handle input form args later
         String path = "src/main/resources/Example.txt";
         File file = new File(path);
-        FileChanger.compress(file);
-        path += ".huf";
-        file = new File(path);
-        FileChanger.decompress(file);
+        try {
+            FileChanger.compress(file);
+            FileChanger.decompress(file);
+        } catch (NoSuchFileException e) {
+            System.out.println("File '" + e.getFile() + "' not found.");
+        } catch (IOException e) {
+            System.out.println("Something went wrong: \n" + e);
+        }
     }
 }

@@ -1,14 +1,12 @@
 package huffman.io;
 
-import java.io.ByteArrayInputStream;
-
-public class BitReader {
+public class BitInputStream {
 
     private byte[] data;
     private int bytePointer = 0;
     private int mask = 128;
 
-    public BitReader(byte[] data) {
+    public BitInputStream(byte[] data) {
         this.data = data;
     }
 
