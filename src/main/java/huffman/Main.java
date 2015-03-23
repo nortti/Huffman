@@ -15,7 +15,7 @@ public class Main {
         String path = "src/main/resources/Example.txt";
         File file = new File(path);
         try {
-            FileChanger.compress(file);
+            // FileChanger.compress(file);
             FileChanger.decompress(file);
         } catch (NoSuchFileException e) {
             System.out.println("File '" + e.getFile() + "' not found.");

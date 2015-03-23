@@ -1,8 +1,8 @@
 package huffman.datastructures;
 
 import static huffman.io.FileChanger.CHARSET_SIZE;
+import huffman.datastructures.PriorityQueue;
 import huffman.io.BitInputStream;
-import java.util.PriorityQueue;
 
 /**
  * Class that builds a Huffman tree and supplies the encodings generated from traversing it
@@ -17,8 +17,8 @@ public class HuffmanTree {
      * @param charFreqs The character frequencies
      */
     public HuffmanTree (int[] charFreqs) {
-        PriorityQueue<Node> minHeap = createLeaves(charFreqs);
-        this.root = buildTree(minHeap);
+        PriorityQueue priorityQueue = createLeaves(charFreqs);
+        this.root = buildTree(priorityQueue);
         setCodes(root, "");
     }
 
@@ -33,12 +33,11 @@ public class HuffmanTree {
      * @param charFreqs table containing frequencies for all 256 ASCII characters
      * @return Min-heap of all leaves
      */
-    private PriorityQueue<Node> createLeaves(int[] charFreqs) {
-        PriorityQueue<Node> leaves = new PriorityQueue<Node>();
+    private PriorityQueue createLeaves(int[] charFreqs) {
+        PriorityQueue leaves = new PriorityQueue();
         for (int charInt = 0; charInt < charFreqs.length; charInt++) {
             int freq = charFreqs[charInt];
             if (freq > 0) {
-                System.out.println(charInt);
                 Node node = new Node((char)charInt, freq);
                 leaves.add(node);
             }
@@ -53,8 +52,8 @@ public class HuffmanTree {
      * @param nodes The nodes
      * @return Root of the tree
      */
-    private Node buildTree(PriorityQueue<Node> nodes) {
-        while (nodes.size() > 1) {
+    private Node buildTree(PriorityQueue nodes) {
+        while (nodes.getSize() > 1) {
             Node leftChild = nodes.poll();
             Node rightChild = nodes.poll();
             Node parent = new Node(leftChild, rightChild);

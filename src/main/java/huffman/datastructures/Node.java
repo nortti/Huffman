@@ -3,7 +3,7 @@ package huffman.datastructures;
 /**
  * Class that represents the nodes of a Huffman tree.
  */
-public class Node implements Comparable<Node> {
+public class Node {
 
     private char character;
     private final int freq;
@@ -11,7 +11,7 @@ public class Node implements Comparable<Node> {
     private Node rightChild;
 
     /**
-     * Creates a leaf node.
+     * Constructor for leaf nodes.
      * @param character The character
      * @param freq The frequency of the character
      */
@@ -23,12 +23,17 @@ public class Node implements Comparable<Node> {
     /**
      * Creates a non-leaf node.
      * @param leftChild The left child
-     * @param rightChild The rigth child
+     * @param rightChild The right child
      */
      public Node(Node leftChild, Node rightChild) {
-        this.freq = leftChild.freq + rightChild.freq;
+        this.freq = leftChild.getFreq() + rightChild.getFreq();
         this.leftChild = leftChild;
         this.rightChild = rightChild;
+    }
+
+    public String toString() {
+        if (this.character != 0) return "" + this.character + "(" + this.freq + ")";
+        return leftChild + "" + rightChild + "(" + this.freq + ")";
     }
 
     public char getCharacter() {
@@ -45,9 +50,5 @@ public class Node implements Comparable<Node> {
 
     public Node getRightChild() {
         return this.rightChild;
-    }
-
-     public int compareTo(Node o) {
-        return this.freq - o.freq;
     }
 }

@@ -34,7 +34,7 @@ public class Encoder {
 
         writeEncodedTree(root, bitOutputStream);
         writeEncodedMessage(string, codes, bitOutputStream);
-        writeEncodedChar((char)0, codes[0], bitOutputStream); // EOF Code
+        writeEncodedChar(codes[0], bitOutputStream); // EOF Code
 
         return bitOutputStream.read();
     }
@@ -54,11 +54,10 @@ public class Encoder {
         for(int i = 0; i < string.length(); i++) {
             char character = string.charAt(i);
             String code = codes[(int)character];
-            writeEncodedChar(character, code, bitOutputStream);
-         }
+            writeEncodedChar(code, bitOutputStream); }
     }
 
-    private static void writeEncodedChar(char character, String code, BitOutputStream bitOutputStream) {
+    private static void writeEncodedChar(String code, BitOutputStream bitOutputStream) {
         for (int i = 0; i < code.length(); i++) {
             if (code.charAt(i) == '0') {
                 bitOutputStream.write(false);
