@@ -13,21 +13,23 @@ public class PriorityQueue {
     public void add(Node node) {
         this.size++;
         int startIndex = this.size;
-        int finalIndex = findFinalIndex(startIndex, node);
-        nodes[finalIndex] = node;
+        int correctIndex = findCorrectIndex(startIndex, node);
+        nodes[correctIndex] = node;
     }
 
     public Node poll() {
         Node leastFreq = nodes[1];
         nodes[1] = nodes[size];
         size--;
+        heapify(1);
         return leastFreq;
     }
 
     public int getSize() {
         return size;
     }
-    private int findFinalIndex(int currentIndex, Node node) {
+
+    private int findCorrectIndex(int currentIndex, Node node) {
         int parentIndex = parentIndex(currentIndex);
         Node parentNode = nodes[parentIndex];
         // Bubble up until correct index is found
@@ -39,6 +41,30 @@ public class PriorityQueue {
         }
         return currentIndex;
     }
+
+    private void heapify(int index) {
+        int leftIndex = leftIndex(index);
+        int rightIndex = rightIndex(index);
+        if (rightIndex <= this.size) {
+            int leastFreqChildIndex;
+            if (nodes[leftIndex].getFreq() < nodes[rightIndex].getFreq()) {
+                leastFreqChildIndex = leftIndex;
+            } else {
+                leastFreqChildIndex = rightIndex;
+            }
+            swap(index, leastFreqChildIndex);
+            heapify(leastFreqChildIndex);
+        } else if (leftIndex == this.size && nodes[index].getFreq() > nodes[leftIndex].getFreq()) {
+            swap(index, leftIndex);
+        }
+    }
+
+    private void swap(int index1, int index2) {
+        Node tmp = nodes[index1];
+        nodes[index1] = nodes[index2];
+        nodes[index2] = tmp;
+    }
+
 
     private int parentIndex(int index) {
         return index / 2;
