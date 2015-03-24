@@ -2,18 +2,19 @@ package huffman.datastructures;
 
 public class PriorityQueue {
 
-    private Node[] nodes = new Node[256 * 256];
+    private final Node[] nodes;
     private int size = 0;
 
-    public void add(Node node) {
-        size++;
-        int index = size;
+    public PriorityQueue(int maxSize) {
+        // Add 1 to account for root being at 1;
+        this.nodes = new Node[maxSize+1];
+    }
 
-        while (index > 1 && nodes[parentIndex(index)].getFreq() > node.getFreq()) {
-            nodes[index] = nodes[parentIndex(index)];
-            index = parentIndex(index);
-        }
-        nodes[index] = node;
+    public void add(Node node) {
+        this.size++;
+        int startIndex = this.size;
+        int finalIndex = findFinalIndex(startIndex, node);
+        nodes[finalIndex] = node;
     }
 
     public Node poll() {
@@ -23,30 +24,20 @@ public class PriorityQueue {
         return leastFreq;
     }
 
-    private void heapify(int index) {
-        int leftIndex = leftIndex(index);
-        int rightIndex = rightIndex(index);
-        if (rightIndex <= this.size) {
-            int leastFreqChildIndex;
-            if (nodes[leftIndex].getFreq() < nodes[rightIndex].getFreq()) {
-                leastFreqChildIndex = leftIndex;
-            } else {
-                leastFreqChildIndex = rightIndex;
-            }
-            heapify(leastFreqChildIndex);
-        } else if (leftIndex == this.size && nodes[index].getFreq() > nodes[leftIndex].getFreq()) {
-            swap(index, leftIndex);
-        }
-    }
-
-    private void swap(int index1, int index2) {
-        Node tmp = nodes[index1];
-        nodes[index1] = nodes[index2];
-        nodes[index2] = tmp;
-    }
-
     public int getSize() {
         return size;
+    }
+    private int findFinalIndex(int currentIndex, Node node) {
+        int parentIndex = parentIndex(currentIndex);
+        Node parentNode = nodes[parentIndex];
+        // Bubble up until correct index is found
+        while (currentIndex > 1 && parentNode.getFreq() > node.getFreq()) {
+            nodes[currentIndex] = nodes[parentIndex];
+            currentIndex = parentIndex(currentIndex);
+            parentIndex = parentIndex(currentIndex);
+            parentNode = nodes[parentIndex];
+        }
+        return currentIndex;
     }
 
     private int parentIndex(int index) {

@@ -34,7 +34,8 @@ public class HuffmanTree {
      * @return Min-heap of all leaves
      */
     private PriorityQueue createLeaves(int[] charFreqs) {
-        PriorityQueue leaves = new PriorityQueue();
+        int leafCount = countUnique(charFreqs);
+        PriorityQueue leaves = new PriorityQueue(leafCount);
         for (int charInt = 0; charInt < charFreqs.length; charInt++) {
             int freq = charFreqs[charInt];
             if (freq > 0) {
@@ -45,6 +46,16 @@ public class HuffmanTree {
         // EOF char
         leaves.add(new Node((char)0, 0));
         return leaves;
+    }
+
+    private int countUnique(int[] charFreqs) {
+        int maxSize = 0;
+        for (int i = 0; i < charFreqs.length; i++) {
+            if (charFreqs[i] > 0) {
+                maxSize++;
+            }
+        }
+        return (maxSize + 1);
     }
 
     /**
