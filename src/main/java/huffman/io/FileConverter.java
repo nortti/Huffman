@@ -32,15 +32,21 @@ public class FileConverter {
         } else {
             outputData  = Decoder.decode(inputData);
         }
-        File outputFile = createOutputFile(inputFile.getPath(), compress);
+        File outputFile = replaceFile(inputFile, compress);
         writeToOutputFile(outputFile, outputData);
     }
 
-    private static File createOutputFile(String inputFilePath, boolean compress) throws IOException {
-        String path = inputFilePath;
-        File outputFile = new File(path);
-        outputFile.createNewFile();
-        return outputFile;
+    private static File replaceFile(File oldFile, boolean compress) throws IOException {
+        String path = oldFile.getPath();
+        if (compress) {
+            path += ".huf";
+        } else if (path.length() > 4) {
+            path = path.substring(0, path.length() - 4);
+        }
+        // oldFile.delete();
+        File newFile = new File(path);
+        newFile.createNewFile();
+        return newFile;
     }
 
     private static void writeToOutputFile(File file, byte[] data) throws IOException {

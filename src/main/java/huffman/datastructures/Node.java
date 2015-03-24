@@ -6,7 +6,7 @@ package huffman.datastructures;
 public class Node {
 
     private char character;
-    private final int freq;
+    private final long freq;
     private Node leftChild;
     private Node rightChild;
 
@@ -40,7 +40,7 @@ public class Node {
         return this.character;
     }
 
-    public int getFreq() {
+    public long getFreq() {
         return this.freq;
     }
 

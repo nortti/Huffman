@@ -10,10 +10,11 @@ public class Main {
     public static void main (String[] args) {
         // For testing, will handle input form args later
         String path = "src/main/resources/Example.txt";
-        File file = new File(path);
+        File inFile = new File(path);
+        File outFile = new File(path + ".huf");
         try {
-            FileConverter.compress(file);
-            FileConverter.decompress(file);
+            FileConverter.compress(inFile);
+            // FileConverter.decompress(outFile);
         } catch (NoSuchFileException e) {
             System.out.println("File '" + e.getFile() + "' not found.");
         } catch (IOException e) {
