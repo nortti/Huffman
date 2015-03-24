@@ -1,6 +1,6 @@
 package huffman.datastructures;
 
-import static huffman.io.FileChanger.CHARSET_SIZE;
+import static huffman.io.FileConverter.CHARSET_SIZE;
 import huffman.datastructures.PriorityQueue;
 import huffman.io.BitInputStream;
 

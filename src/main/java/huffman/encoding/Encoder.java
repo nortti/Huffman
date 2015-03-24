@@ -1,6 +1,6 @@
 package huffman.encoding;
 
-import static huffman.io.FileChanger.CHARSET_SIZE;
+import static huffman.io.FileConverter.CHARSET_SIZE;
 import huffman.io.BitOutputStream;
 import huffman.datastructures.HuffmanTree;
 import huffman.datastructures.Node;

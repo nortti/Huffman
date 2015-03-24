@@ -9,7 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class FileChanger {
+public class FileConverter {
 
     public static final int CHARSET_SIZE = 256;
 

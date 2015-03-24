@@ -1,6 +1,6 @@
 package huffman;
 
-import huffman.io.FileChanger;
+import huffman.io.FileConverter;
 import java.nio.file.NoSuchFileException;
 import java.io.File;
 import java.io.IOException;
@@ -12,8 +12,8 @@ public class Main {
         String path = "src/main/resources/Example.txt";
         File file = new File(path);
         try {
-            FileChanger.compress(file);
-            FileChanger.decompress(file);
+            FileConverter.compress(file);
+            FileConverter.decompress(file);
         } catch (NoSuchFileException e) {
             System.out.println("File '" + e.getFile() + "' not found.");
         } catch (IOException e) {

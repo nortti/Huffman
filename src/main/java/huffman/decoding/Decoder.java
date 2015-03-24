@@ -1,6 +1,6 @@
 package huffman.decoding;
 
-import static huffman.io.FileChanger.CHARSET_SIZE;
+import static huffman.io.FileConverter.CHARSET_SIZE;
 import huffman.io.BitInputStream;
 import huffman.datastructures.HuffmanTree;
 
