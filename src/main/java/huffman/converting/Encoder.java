@@ -1,13 +1,14 @@
-package huffman.encoding;
+package huffman.converting;
 
 import static huffman.io.FileConverter.CHARSET_SIZE;
 import huffman.io.BitOutputStream;
 import huffman.datastructures.HuffmanTree;
 import huffman.datastructures.Node;
 
-public class Encoder {
+public class Encoder implements DataConverter {
 
-    public static byte[] encode(byte[] inputData) {
+    @Override
+    public byte[] convert(byte[] inputData) {
         String inputString = new String(inputData);
         int[] charFreqs = countCharFreqs(inputString);
 
@@ -19,6 +20,10 @@ public class Encoder {
         return outputData;
     }
 
+    @Override
+    public String newPath(String path) {
+        return path + ".huf";
+    }
     private static int[] countCharFreqs(String string) {
         int[] charFreqs = new int[CHARSET_SIZE];
 
