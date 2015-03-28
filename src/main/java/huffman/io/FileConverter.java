@@ -20,14 +20,14 @@ public class FileConverter {
         replaceFile(file, newPath, outputData);
     }
 
-    private void replaceFile(File file, String newPath, byte[] data) throws IOException {
+    private static void replaceFile(File file, String newPath, byte[] data) throws IOException {
         file.delete();
         file = new File(newPath);
         writeToFile(file, data);
         file.createNewFile();
     }
 
-    private void writeToFile(File file, byte[] data) throws IOException {
+    private static void writeToFile(File file, byte[] data) throws IOException {
         FileOutputStream outputStream = new FileOutputStream(file);
         outputStream.write(data);
         outputStream.close();

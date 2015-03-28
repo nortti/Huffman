@@ -1,18 +1,21 @@
 package huffman.converting;
 
-import static huffman.io.FileConverter.CHARSET_SIZE;
 import huffman.io.BitOutputStream;
-import huffman.datastructures.HuffmanTree;
 import huffman.datastructures.Node;
 
 public class Encoder implements DataConverter {
 
+    private DecodingHuffTreeMaker huffmanTreeMaker;
+
+    public Encoder(DecodingHuffTreeMaker huffmanTreeMaker) {
+        this.huffmanTreeMaker = huffmanTreeMaker;
+    }
+
     @Override
     public byte[] convert(byte[] inputData) {
         String inputString = new String(inputData);
-        int[] charFreqs = countCharFreqs(inputString);
+        HuffmanTree huffmanTree = this.huffmanTreeMaker.makeTree(inputString);
 
-        HuffmanTree huffmanTree = new HuffmanTree(charFreqs);
         Node root = huffmanTree.getRoot();
         String[] codes = huffmanTree.getCodes();
 
@@ -23,15 +26,6 @@ public class Encoder implements DataConverter {
     @Override
     public String newPath(String path) {
         return path + ".huf";
-    }
-    private static int[] countCharFreqs(String string) {
-        int[] charFreqs = new int[CHARSET_SIZE];
-
-        for (int i = 0; i < string.length(); i++) {
-            charFreqs[string.charAt(i)]++;
-        }
-
-        return charFreqs;
     }
 
     private static byte[] createOutput(Node root, String string, String[] codes) {

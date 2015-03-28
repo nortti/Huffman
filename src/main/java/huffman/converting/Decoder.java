@@ -2,15 +2,21 @@ package huffman.converting;
 
 import static huffman.io.FileConverter.CHARSET_SIZE;
 import huffman.io.BitInputStream;
-import huffman.datastructures.HuffmanTree;
 
 public class Decoder implements DataConverter {
+
+    private HuffmanTreeMaker huffmanTreeMaker;
+
+    public Decoder(HuffmanTreeMaker huffmanTreeMaker) {
+        this.huffmanTreeMaker = huffmanTreeMaker;
+    }
 
     // Will clean up
     @Override
     public byte[] convert(byte[] data) {
         BitInputStream bitInputStream = new BitInputStream(data);
-        HuffmanTree huffmanTree = new HuffmanTree(bitInputStream);
+        HuffmanTree huffmanTree = huffmanTreeMaker.makeTree(data);
+        //prob
         String decoded = "";
         String code = "";
         boolean EOF = false;
