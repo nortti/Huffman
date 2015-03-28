@@ -6,6 +6,7 @@ import huffman.datastructures.HuffmanTree;
 
 public class Decoder implements DataConverter {
 
+    // Will clean up
     @Override
     public byte[] convert(byte[] data) {
         BitInputStream bitInputStream = new BitInputStream(data);

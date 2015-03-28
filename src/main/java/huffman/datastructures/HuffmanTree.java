@@ -89,7 +89,7 @@ public class HuffmanTree {
         }
     }
 
-    public Node decodeTree(BitInputStream bitInputStream) {
+    private Node decodeTree(BitInputStream bitInputStream) {
         boolean isSet = bitInputStream.read();
         if (isSet) {
             char character = (char)bitInputStream.readByte();
