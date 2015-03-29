@@ -12,12 +12,14 @@ public class FileConverter {
 
     public static final int CHARSET_SIZE = 256;
 
-    public void convert(File file, DataConverter dataConverter) throws IOException {
+    public void convert(File file, DataConverter dataConverter) {
         String path = file.getPath();
+        try {
         byte[] inputData = Files.readAllBytes(Paths.get(path));
         byte[] outputData  = dataConverter.convert(inputData);
         String newPath = dataConverter.newPath(path);
         replaceFile(file, newPath, outputData);
+        } catch (Exception e) {};
     }
 
     private static void replaceFile(File file, String newPath, byte[] data) throws IOException {

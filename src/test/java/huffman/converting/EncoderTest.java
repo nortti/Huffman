@@ -8,7 +8,7 @@ import org.junit.*;
 
 public class EncoderTest {
 
-    Encoder encoder = new Encoder(new DecodingHuffTreeMaker());
+    Encoder encoder = new Encoder(new EncodingHuffTreeMaker());
 
     @Test
     public void correctEncodingOnExample() {

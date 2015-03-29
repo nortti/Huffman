@@ -5,16 +5,17 @@ import huffman.datastructures.Node;
 
 public class Encoder implements DataConverter {
 
-    private DecodingHuffTreeMaker huffmanTreeMaker;
+    private HuffmanTreeMaker huffmanTreeMaker;
 
-    public Encoder(DecodingHuffTreeMaker huffmanTreeMaker) {
+    public Encoder(HuffmanTreeMaker huffmanTreeMaker) {
         this.huffmanTreeMaker = huffmanTreeMaker;
     }
 
     @Override
     public byte[] convert(byte[] inputData) {
+        HuffmanTree huffmanTree = this.huffmanTreeMaker.makeTree(inputData);
+
         String inputString = new String(inputData);
-        HuffmanTree huffmanTree = this.huffmanTreeMaker.makeTree(inputString);
 
         Node root = huffmanTree.getRoot();
         String[] codes = huffmanTree.getCodes();
@@ -35,7 +36,7 @@ public class Encoder implements DataConverter {
         writeEncodedMessage(string, codes, bitOutputStream);
         writeEncodedChar(codes[0], bitOutputStream); // EOF Code
 
-        return bitOutputStream.read();
+        return bitOutputStream.flush();
     }
 
     private static void writeEncodedTree(Node node, BitOutputStream bitOutputStream) {
@@ -53,7 +54,8 @@ public class Encoder implements DataConverter {
         for(int i = 0; i < string.length(); i++) {
             char character = string.charAt(i);
             String code = codes[(int)character];
-            writeEncodedChar(code, bitOutputStream); }
+            writeEncodedChar(code, bitOutputStream);
+            }
     }
 
     private static void writeEncodedChar(String code, BitOutputStream bitOutputStream) {

@@ -1,9 +1,8 @@
 package huffman.io;
 
 import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
 
-public class BitOutputStream implements OutputStream {
+public class BitOutputStream {
 
     private ByteArrayOutputStream out = new ByteArrayOutputStream();
     private byte workingByte = 0;
@@ -31,7 +30,7 @@ public class BitOutputStream implements OutputStream {
         }
     }
 
-    public byte[] read() {
+    public byte[] flush() {
         workingByte <<= 8-bitCounter;
         out.write(workingByte);
         byte[] data = out.toByteArray();

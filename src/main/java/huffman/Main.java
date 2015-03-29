@@ -3,10 +3,9 @@ package huffman;
 import huffman.converting.Decoder;
 import huffman.converting.Encoder;
 import huffman.converting.DecodingHuffTreeMaker;
+import huffman.converting.EncodingHuffTreeMaker;
 import huffman.io.FileConverter;
-import java.nio.file.NoSuchFileException;
 import java.io.File;
-import java.io.IOException;
 
 public class Main {
 
@@ -15,18 +14,11 @@ public class Main {
         String path = "src/main/resources/Example.txt";
         File inFile = new File(path);
         File outFile = new File(path + ".huf");
-        DecodingHuffTreeMaker huffmanTreeMaker = new DecodingHuffTreeMaker();
         FileConverter fileConverter = new FileConverter();
-        Encoder encoder = new Encoder(huffmanTreeMaker);
-        Decoder decoder = new Decoder(huffmanTreeMaker);
-        try {
-            fileConverter.convert(inFile, encoder);
-            fileConverter.convert(outFile, decoder);
-        } catch (NoSuchFileException e) {
-            System.out.println("File '" + e.getFile() + "' not found.");
-        } catch (IOException e) {
-            System.out.println("Something went wrong: \n" + e);
-        }
+        Encoder encoder = new Encoder(new EncodingHuffTreeMaker());
+        Decoder decoder = new Decoder(new DecodingHuffTreeMaker());
+        fileConverter.convert(inFile, encoder);
+        fileConverter.convert(outFile, decoder);
         System.out.println("Done");
     }
 }

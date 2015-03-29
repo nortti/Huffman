@@ -16,7 +16,6 @@ public class Decoder implements DataConverter {
     public byte[] convert(byte[] data) {
         BitInputStream bitInputStream = new BitInputStream(data);
         HuffmanTree huffmanTree = huffmanTreeMaker.makeTree(data);
-        //prob
         String decoded = "";
         String code = "";
         boolean EOF = false;
