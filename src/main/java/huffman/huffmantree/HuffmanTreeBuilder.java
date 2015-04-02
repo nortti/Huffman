@@ -4,8 +4,15 @@ import static huffman.io.FileConverter.CHARSET_SIZE;
 import huffman.datastructures.Node;
 import huffman.datastructures.PriorityQueue;
 
+/**
+ * Builds huffman trees from uncompressed data.
+ */
 public class HuffmanTreeBuilder implements HuffmanTreeMaker {
 
+    /**
+     * A simple huffman-tree making algorithm.
+     * @param data Uncompressed data
+     */
     public HuffmanTree makeTree(byte[] data) {
         int[] charFreqs = countCharFreqs(data);
         PriorityQueue priorityQueue = createLeaves(charFreqs);
@@ -13,26 +20,35 @@ public class HuffmanTreeBuilder implements HuffmanTreeMaker {
         return huffmanTree;
     }
 
+    /**
+     * Creates a character-frequency lookup table.
+     */
     private static int[] countCharFreqs(byte[] data) {
         int[] charFreqs = new int[CHARSET_SIZE];
-        for(byte charByte : data) {
+        for (byte charByte : data) {
             charFreqs[(char) charByte]++;
         }
         return charFreqs;
     }
 
+    /**
+     * Creates a priorityqueue of nodes, where nodes represent characters and lower frequency has
+     * higher priority.
+     */
     private static PriorityQueue createLeaves(int[] charFreqs) {
         int leafCount = countUnique(charFreqs);
-        PriorityQueue leaves = new PriorityQueue(leafCount);
-        for (int charInt = 0; charInt < charFreqs.length; charInt++) {
+        // leafCount is the max-size of the PQ
+        PriorityQueue leaves = new PriorityQueue(leafCount); 
+        // Add a node for each character that occurs
+        for (int charInt = 0; charInt < charFreqs.length; charInt++) { 
             int freq = charFreqs[charInt];
-            if (freq > 0) {
+            if (freq > 0) {                
                 Node node = new Node((char) charInt, freq);
                 leaves.add(node);
             }
         }
-        // EOF char
-        leaves.add(new Node((char) 0, 0));
+
+        leaves.add(new Node((char) 0, 0)); // EOF character
         return leaves;
     }
 

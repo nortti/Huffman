@@ -1,4 +1,5 @@
 huffman
-huffman.compression
-huffman.compression.tools
+huffman.converting
 huffman.datastructures
+huffman.huffmantree
+huffman.io

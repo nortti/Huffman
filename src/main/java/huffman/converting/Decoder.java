@@ -50,21 +50,26 @@ public class Decoder implements DataConverter {
         }
     }
 
-    /** 
-     * Uses recursion to find a character (leaf node) starting from the root and moving left/right 
-     * according to the bits read in the bit input stream
+    /**
+     * Uses recursion to find a character starting from the root and moving left/right according to
+     * the bits read in the bit input stream until a leaf node is reached.
      */
     private char findCharacter(Node node, BitInputStream bitInputStream) {
-        if (node.getLeftChild() == null) {
+        if (node.getLeftChild() == null) { // Is leaf
             return node.getCharacter();
         } else if (bitInputStream.readBit() == true) {
-            return findCharacter(node.getRightChild(), bitInputStream);
+            return findCharacter(node.getRightChild(), bitInputStream); // Move left
         } else {
-            return findCharacter(node.getLeftChild(), bitInputStream);
+            return findCharacter(node.getLeftChild(), bitInputStream); // Move right
         }
 
     }
 
+    /**
+     * Returns the new path of any file converted using this class.
+     * @param path Old path
+     * @return New path
+     */
     @Override
     public String getNewPath(String path) {
         if (path.endsWith(".huf") && path.length() > 4) {

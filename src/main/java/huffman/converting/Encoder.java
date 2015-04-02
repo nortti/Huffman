@@ -57,7 +57,7 @@ public class Encoder implements DataConverter {
             String code = huffmanTree.getCode(character); // Get the huffman encoding
             writeEncodedChar(code, bitOutputStream); // And write it
         }
-        writeEncodedChar(huffmanTree.getCode((char) 0), bitOutputStream); // Finally, add an EOF code
+        writeEncodedChar(huffmanTree.getCode((char) 0), bitOutputStream); // add an EOF code
     }
 
     /**

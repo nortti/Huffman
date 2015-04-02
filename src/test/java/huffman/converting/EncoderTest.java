@@ -2,11 +2,11 @@ package huffman.converting;
 
 import static org.junit.Assert.*;
 
+import org.junit.*;
+
 import huffman.datastructures.Node;
 import huffman.huffmantree.HuffmanTree;
 import huffman.huffmantree.HuffmanTreeMaker;
-
-import org.junit.*;
 
 public class EncoderTest {
 
@@ -16,7 +16,8 @@ public class EncoderTest {
     public class HuffmanTreeMakerStub implements HuffmanTreeMaker {
         @Override
         public HuffmanTree makeTree(byte[] data) {
-            Node root = new Node(new Node('t', 0), new Node(new Node((char) 0, 0), new Node('e', 0)));
+            Node root = new Node(new Node('t', 0),
+                                 new Node(new Node((char) 0, 0), new Node('e', 0)));
             return new HuffmanTree(root);
         }
     }

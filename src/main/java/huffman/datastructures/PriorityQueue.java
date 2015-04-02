@@ -35,7 +35,7 @@ public class PriorityQueue {
         return this.size;
     }
 
-    /** 
+    /**
      * Finds the correct index for a node at currentIndex by bubbling up.
      */
     private int findCorrectIndex(int currentIndex, Node node) {
@@ -66,7 +66,8 @@ public class PriorityQueue {
             }
             this.swap(index, leastFreqChildIndex);
             this.heapify(leastFreqChildIndex);
-        } else if (leftIndex == this.size && this.nodes[index].getFreq() > this.nodes[leftIndex].getFreq()) {
+        } else if (leftIndex == this.size &&
+                   this.nodes[index].getFreq() > this.nodes[leftIndex].getFreq()) {
             this.swap(index, leftIndex);
         }
     }

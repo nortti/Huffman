@@ -3,6 +3,9 @@ package huffman.huffmantree;
 import static huffman.io.FileConverter.CHARSET_SIZE;
 import huffman.datastructures.Node;
 
+/**
+ * Represents a huffman tree.
+ */
 public class HuffmanTree {
 
     private Node root;
@@ -15,6 +18,11 @@ public class HuffmanTree {
         setCodes(root, "");
     }
 
+    /**
+     * Traverses the tree recursively, setting up the lookup table of character-codes.
+     * Adds a 0 to the end of the code when it moves left, and a 1 when it moves right. Once a
+     * leaf is reached the code is set to the accumulated string.
+     */
     private void setCodes(Node node, String code) {
         this.nodeCount++;
         if (node.getLeftChild() == null) { // Is leaf
