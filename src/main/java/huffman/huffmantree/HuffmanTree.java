@@ -1,4 +1,4 @@
-package huffman.converting;
+package huffman.huffmantree;
 
 import static huffman.io.FileConverter.CHARSET_SIZE;
 import huffman.datastructures.Node;
@@ -7,6 +7,8 @@ public class HuffmanTree {
 
     private Node root;
     private String[] codes = new String[CHARSET_SIZE];
+    private int leafCount;
+    private int nodeCount;
 
     public HuffmanTree(Node root) {
         this.root = root;
@@ -14,7 +16,9 @@ public class HuffmanTree {
     }
 
     private void setCodes(Node node, String code) {
+        this.nodeCount++;
         if (node.getLeftChild() == null) { // Is leaf
+            this.leafCount++;
             this.codes[node.getCharacter()] = code;
         } else {
             setCodes(node.getLeftChild(), code + '0');
@@ -26,8 +30,16 @@ public class HuffmanTree {
         return this.root;
     }
 
-    public String[] getCodes() {
-        return codes;
+    public String getCode(char character) {
+        return codes[character];
+    }
+
+    public int getLeafCount() {
+        return this.leafCount;
+    }
+
+    public int getNodeCount() {
+        return this.nodeCount;
     }
 }
 

@@ -1,9 +1,12 @@
-package huffman.converting;
+package huffman.huffmantree;
 
 import huffman.datastructures.Node;
 import huffman.io.BitInputStream;
 
-public class DecodingHuffTreeMaker implements HuffmanTreeMaker {
+/**
+ * A class for creating huffman trees from encoded data.
+ */
+public class HuffmanTreeRebuilder implements HuffmanTreeMaker {
 
     @Override
      public HuffmanTree makeTree(byte[] data) {
@@ -14,9 +17,9 @@ public class DecodingHuffTreeMaker implements HuffmanTreeMaker {
     }
 
     private static Node decodeTreeFromData(BitInputStream bitInputStream) {
-        boolean isSet = bitInputStream.read();
+        boolean isSet = bitInputStream.readBit();
         if (isSet) {
-            char character = (char)bitInputStream.readByte();
+            char character = (char) bitInputStream.readByte();
             return new Node(character, 0);
         } else {
             Node leftChild = decodeTreeFromData(bitInputStream);

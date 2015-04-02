@@ -11,9 +11,7 @@ public class Node {
     private Node rightChild;
 
     /**
-     * Constructor for leaf nodes.
-     * @param character The character
-     * @param freq The frequency of the character
+     * Leaf node
      */
     public Node(char character, int freq) {
         this.character = character;
@@ -21,19 +19,12 @@ public class Node {
     }
 
     /**
-     * Creates a non-leaf node.
-     * @param leftChild The left child
-     * @param rightChild The right child
+     * Internal node
      */
-     public Node(Node leftChild, Node rightChild) {
+    public Node(Node leftChild, Node rightChild) {
         this.freq = leftChild.getFreq() + rightChild.getFreq();
         this.leftChild = leftChild;
         this.rightChild = rightChild;
-    }
-
-    public String toString() {
-        if (this.character != 0) return "" + this.character + "(" + this.freq + ")";
-        return leftChild + "" + rightChild + "(" + this.freq + ")";
     }
 
     public char getCharacter() {

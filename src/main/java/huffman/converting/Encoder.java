@@ -1,8 +1,13 @@
 package huffman.converting;
 
-import huffman.io.BitOutputStream;
 import huffman.datastructures.Node;
+import huffman.huffmantree.HuffmanTree;
+import huffman.huffmantree.HuffmanTreeMaker;
+import huffman.io.BitOutputStream;
 
+/**
+ * Used for encoding uncompressed normal files using huffman coding.
+ */
 public class Encoder implements DataConverter {
 
     private HuffmanTreeMaker huffmanTreeMaker;
@@ -11,34 +16,26 @@ public class Encoder implements DataConverter {
         this.huffmanTreeMaker = huffmanTreeMaker;
     }
 
+    /**
+     * Creates a compressed version of an input data using huffman coding.
+     */
     @Override
     public byte[] convert(byte[] inputData) {
+        // Make huffman tree from data
         HuffmanTree huffmanTree = this.huffmanTreeMaker.makeTree(inputData);
 
-        String inputString = new String(inputData);
-
-        Node root = huffmanTree.getRoot();
-        String[] codes = huffmanTree.getCodes();
-
-        byte[] outputData = createOutput(root, inputString, codes);
-        return outputData;
-    }
-
-    @Override
-    public String newPath(String path) {
-        return path + ".huf";
-    }
-
-    private static byte[] createOutput(Node root, String string, String[] codes) {
         BitOutputStream bitOutputStream = new BitOutputStream();
 
-        writeEncodedTree(root, bitOutputStream);
-        writeEncodedMessage(string, codes, bitOutputStream);
-        writeEncodedChar(codes[0], bitOutputStream); // EOF Code
+        // Write a binary representation of the tree, followed by the encoded message.
+        writeEncodedTree(huffmanTree.getRoot(), bitOutputStream);
+        writeEncodedMessage(inputData, huffmanTree, bitOutputStream);
 
-        return bitOutputStream.flush();
+        return bitOutputStream.toByteArray();
     }
 
+    /**
+     * Writes an encoded representation of a tree to a bit output stream using recursion.
+     */
     private static void writeEncodedTree(Node node, BitOutputStream bitOutputStream) {
         if (node.getLeftChild() == null) { // Is leaf
             bitOutputStream.write(true);
@@ -50,21 +47,39 @@ public class Encoder implements DataConverter {
         }
     }
 
-    private static void writeEncodedMessage(String string, String[] codes, BitOutputStream bitOutputStream) {
-        for(int i = 0; i < string.length(); i++) {
-            char character = string.charAt(i);
-            String code = codes[(int)character];
-            writeEncodedChar(code, bitOutputStream);
-            }
+    /**
+     * Uses the huffman codes to write out the full original data to the bit output stream.
+     */
+    private static void writeEncodedMessage(byte[] data, HuffmanTree huffmanTree,
+                                            BitOutputStream bitOutputStream) {
+        for (byte characterByte : data) { // For each character in the message
+            char character = (char) characterByte;
+            String code = huffmanTree.getCode(character); // Get the huffman encoding
+            writeEncodedChar(code, bitOutputStream); // And write it
+        }
+        writeEncodedChar(huffmanTree.getCode((char) 0), bitOutputStream); // Finally, add an EOF code
     }
 
+    /**
+     * Writes a single huffman-encoded character to the bit output stream.
+     */
     private static void writeEncodedChar(String code, BitOutputStream bitOutputStream) {
-        for (int i = 0; i < code.length(); i++) {
-            if (code.charAt(i) == '0') {
+        for (char character : code.toCharArray()) {
+            if (character == '0') {
                 bitOutputStream.write(false);
             } else {
                 bitOutputStream.write(true);
             }
         }
+    }
+
+    /**
+     * Returns the new path of any file converted using this class.
+     * @param path Old path
+     * @return New path
+     */
+    @Override
+    public String getNewPath(String path) {
+        return path + ".huf";
     }
 }

@@ -1,8 +1,15 @@
 package huffman.converting;
 
-import static huffman.io.FileConverter.CHARSET_SIZE;
+import java.io.ByteArrayOutputStream;
+
+import huffman.datastructures.Node;
+import huffman.huffmantree.HuffmanTree;
+import huffman.huffmantree.HuffmanTreeMaker;
 import huffman.io.BitInputStream;
 
+/**
+ * Used for converting huffman-encoded data back to its original form.
+ */
 public class Decoder implements DataConverter {
 
     private HuffmanTreeMaker huffmanTreeMaker;
@@ -11,43 +18,59 @@ public class Decoder implements DataConverter {
         this.huffmanTreeMaker = huffmanTreeMaker;
     }
 
-    // Will clean up
     @Override
     public byte[] convert(byte[] data) {
-        BitInputStream bitInputStream = new BitInputStream(data);
-        HuffmanTree huffmanTree = huffmanTreeMaker.makeTree(data);
-        String decoded = "";
-        String code = "";
-        boolean EOF = false;
-        while (!EOF) {
-            boolean isSet = bitInputStream.read();
-            if (!isSet) {
-                code += '0';
+        // Make huffman tree from data
+        HuffmanTree huffmanTree = this.huffmanTreeMaker.makeTree(data);
+
+        // inputstream needs to skip the tree portion of data
+        int howMuchToSkip = huffmanTree.getNodeCount() + huffmanTree.getLeafCount() * 8;
+        BitInputStream bitInputStream = new BitInputStream(data, howMuchToSkip);
+
+        ByteArrayOutputStream bitOutputStream = new ByteArrayOutputStream();
+
+        // Write the decoded message to the output stream
+        writeDecodedMessage(huffmanTree.getRoot(), bitInputStream, bitOutputStream);
+        // And return it
+        return bitOutputStream.toByteArray();
+    }
+
+    private void writeDecodedMessage(Node root, BitInputStream inputStream,
+                                     ByteArrayOutputStream outputStream) {
+        while (true) {
+            // Get next character to be written
+            char nextCharacter = findCharacter(root, inputStream);
+            if ((int) nextCharacter == 0) {
+                // If it's the EOF code, finish
+                break;
             } else {
-                code += '1';
-            }
-            for (int i = 0; i < CHARSET_SIZE; i++) {
-                String workingCode = huffmanTree.getCodes()[i];
-                if (workingCode != null && workingCode.equals(code)) {
-                    if (i == 0) {
-                        EOF = true;
-                        break;
-                    } else {
-                      decoded += (char) i;
-                      code = "";
-                   }
-                  break;
-                }
+                // Otherwise, add it to the output stream and continue
+                outputStream.write(nextCharacter);
             }
         }
-        return decoded.getBytes();
+    }
+
+    /** 
+     * Uses recursion to find a character (leaf node) starting from the root and moving left/right 
+     * according to the bits read in the bit input stream
+     */
+    private char findCharacter(Node node, BitInputStream bitInputStream) {
+        if (node.getLeftChild() == null) {
+            return node.getCharacter();
+        } else if (bitInputStream.readBit() == true) {
+            return findCharacter(node.getRightChild(), bitInputStream);
+        } else {
+            return findCharacter(node.getLeftChild(), bitInputStream);
+        }
+
     }
 
     @Override
-    public String newPath(String path) {
+    public String getNewPath(String path) {
         if (path.endsWith(".huf") && path.length() > 4) {
             return path.substring(0, path.length() - 4);
+        } else {
+            return path;
         }
-        return path;
-    }
+     }
 }

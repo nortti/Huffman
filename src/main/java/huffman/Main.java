@@ -1,24 +1,25 @@
 package huffman;
 
-import huffman.converting.Decoder;
-import huffman.converting.Encoder;
-import huffman.converting.DecodingHuffTreeMaker;
-import huffman.converting.EncodingHuffTreeMaker;
-import huffman.io.FileConverter;
 import java.io.File;
 
+import huffman.converting.Decoder;
+import huffman.converting.Encoder;
+import huffman.huffmantree.HuffmanTreeBuilder;
+import huffman.huffmantree.HuffmanTreeRebuilder;
+import huffman.io.FileConverter;
+
+/**
+ * Main class, currenty for manual testing purposes.
+ */
 public class Main {
 
     public static void main (String[] args) {
-        // For testing, will handle input from args later
-        String path = "src/main/resources/Example.txt";
-        File inFile = new File(path);
-        File outFile = new File(path + ".huf");
         FileConverter fileConverter = new FileConverter();
-        Encoder encoder = new Encoder(new EncodingHuffTreeMaker());
-        Decoder decoder = new Decoder(new DecodingHuffTreeMaker());
-        fileConverter.convert(inFile, encoder);
-        fileConverter.convert(outFile, decoder);
-        System.out.println("Done");
+        String fileName = "Example.txt";
+        Encoder encoder = new Encoder(new HuffmanTreeBuilder());
+        Decoder decoder = new Decoder(new HuffmanTreeRebuilder());
+
+        fileConverter.convert(new File(fileName), encoder);
+        fileConverter.convert(new File(fileName + ".huf"), decoder);
     }
 }

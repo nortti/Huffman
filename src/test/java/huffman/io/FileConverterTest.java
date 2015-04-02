@@ -1,14 +1,15 @@
 package huffman.io;
 
-import huffman.converting.DataConverter;
-
 import static org.junit.Assert.*;
+
 import org.junit.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import huffman.converting.DataConverter;
 
 public class FileConverterTest {
 
@@ -20,10 +21,10 @@ public class FileConverterTest {
     public class DataConverterStub implements DataConverter {
         @Override
         public byte[] convert(byte[] data) {
-           return new byte[] { (byte)64 };
+           return new byte[] { (byte) 64 };
         }
         @Override
-        public String newPath(String path) {
+        public String getNewPath(String path) {
             return path + ".test";
         }
     }
@@ -35,7 +36,7 @@ public class FileConverterTest {
     }
 
     @Test
-    public void OldFileIsDeleted() {
+    public void oldFileIsDeleted() {
         assertFalse(file.exists());
     }
 
@@ -53,7 +54,7 @@ public class FileConverterTest {
     @Test
     public void newFileHasCorrectData() throws IOException {
     byte[] data = Files.readAllBytes(Paths.get(path + ".test"));
-    assertArrayEquals(data, new byte[] { (byte)64 });
+    assertArrayEquals(data, new byte[] { (byte) 64 });
     }
 
     @After
