@@ -23,7 +23,7 @@ käyttäen luokkia **Node** ja **PrioirtyQueue**.
 Kun **HuffmanTreeMaker** on luonut **Encoder**ille **HuffmanTree**n, se voi alkaa kirjoittamaan  
 pakattua dataa. Sitä varten se tarvitsee **BitOutputStream**iä joka käyttää javan  
 ByteArrayOutputStreamiä. Javassa ei ole valmiiksi bittitason streamejä. Ensin kirjoitetaan  
-[tästä postauksesta](http://stackoverflow.com/a/759766) löytyvän algoritmin mukaisesti puun bittitasoesitys ja lopuksi kirjoitetaan    
+[tästä postauksesta](http://stackoverflow.com/a/759766) löytyvän algoritmin mukaisesti puun bittitasoesitys ja lopuksi kirjoitetaan  
 **HuffmanTree**-luokasta löytyviä koodeja käyttäen loput viestistä uudessa esitysmuodossaan. 
 
 Purkamisessa käytettävä **HuffmanTreeRebuilder** käyttää **BitInputStream**iä luodakseen puun  
