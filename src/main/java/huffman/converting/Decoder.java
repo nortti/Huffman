@@ -28,12 +28,12 @@ public class Decoder implements DataConverter {
         int howMuchToSkip = huffmanTree.getNodeCount() + huffmanTree.getLeafCount() * 8;
         BitInputStream bitInputStream = new BitInputStream(data, howMuchToSkip);
 
-        ByteArrayOutputStream bitOutputStream = new ByteArrayOutputStream();
+        ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
 
         // Write the decoded message to the output stream
-        writeDecodedMessage(huffmanTree.getRoot(), bitInputStream, bitOutputStream);
+        writeDecodedMessage(huffmanTree.getRoot(), bitInputStream, byteOutputStream);
         // And return it
-        return bitOutputStream.toByteArray();
+        return byteOutputStream.toByteArray();
     }
 
     private void writeDecodedMessage(Node root, BitInputStream inputStream,
