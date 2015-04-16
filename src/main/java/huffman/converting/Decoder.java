@@ -1,6 +1,7 @@
 package huffman.converting;
 
 import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
 
 import huffman.datastructures.Node;
 import huffman.huffmantree.HuffmanTree;
@@ -19,7 +20,7 @@ public class Decoder implements DataConverter {
     }
 
     @Override
-    public byte[] convert(byte[] data) {
+    public byte[] convert(byte[] data) throws UnsupportedEncodingException {
         // Make huffman tree from data
         HuffmanTree huffmanTree = this.huffmanTreeMaker.makeTree(data);
 

@@ -5,11 +5,16 @@ apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'eclipse'
 apply plugin: 'checkstyle'
-task docs(type: Javadoc) {
-    source = sourceSets.main.allJava
-    destinationDir = reporting.file("../../Dokumentit/Javadocs/")
-    }
+
 mainClassName = "huffman/Main"
+
+run {
+    if ( project.hasProperty("appArgs") ) {
+        args Eval.me(appArgs)
+    }
+}
+
+
 dependencies {
   testCompile group: 'junit', name: 'junit', version: '4.11'
 }

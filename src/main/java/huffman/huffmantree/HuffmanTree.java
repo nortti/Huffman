@@ -1,6 +1,9 @@
 package huffman.huffmantree;
 
 import static huffman.io.FileConverter.CHARSET_SIZE;
+
+import java.io.UnsupportedEncodingException;
+
 import huffman.datastructures.Node;
 
 /**

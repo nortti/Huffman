@@ -1,9 +1,9 @@
 package huffman.io;
 
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -24,18 +24,21 @@ public class FileConverter {
      * Converts a file with a compressed/decompressed version of that file.
      * @param Dataconverter An encoder/decoder
      */
-    public void convert(File file, DataConverter dataConverter) {
+    public void convert(File file, DataConverter dataConverter) throws IOException {
         String path = file.getPath();
-        try {
-        // Get data from file 
+        // Get data from file
         byte[] inputData = Files.readAllBytes(Paths.get(path));
         // Then get an encoded/decoded version of that data
-        byte[] outputData  = dataConverter.convert(inputData);
+        byte[] outputData;
+        try {
+         outputData  = dataConverter.convert(inputData);
+        } catch (UnsupportedEncodingException e) {
+            System.out.println("File conversion failure - did you try to compress/decompress" +
+                               " an already compressed/decompressed file?");
+            return;
+        }
         // And replace input file with a new file with new data
         replaceFile(file, dataConverter.getNewPath(path), outputData);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private static void replaceFile(File file, String newPath, byte[] data) throws IOException {
