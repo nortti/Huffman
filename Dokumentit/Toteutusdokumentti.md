@@ -23,10 +23,15 @@ käyttäen luokkia **Node** ja **PrioirtyQueue**.
 Kun **HuffmanTreeMaker** on luonut **Encoder**ille **HuffmanTree**n, se voi alkaa kirjoittamaan  
 pakattua dataa. Sitä varten se tarvitsee **BitOutputStream**iä joka käyttää javan  
 ByteArrayOutputStreamiä. Javassa ei ole valmiiksi bittitason streamejä. Ensin kirjoitetaan  
+[tästä postauksesta](http://stackoverflow.com/a/759766) löytyvän algoritmin mukaisesti puun bittitasoesitys ja lopuksi kirjoitetaan    
+**HuffmanTree**-luokasta löytyviä koodeja käyttäen loput viestistä uudessa esitysmuodossaan. 
+
+Purkamisessa käytettävä **HuffmanTreeRebuilder** käyttää **BitInputStream**iä luodakseen puun  
+edellisestä linkistä löytyvän purkamisalgoritmin avulla. **Decoder** voi sitten tämän avulla kääntää viestin.
 
 ### Saavutetut aika- ja tilavaativuudet
 
-_n_ on uniikkien merkkien määrä viestissä, joka on maksimissaan 256 (merkkien määrä extended ascii:ssa
+_n_ on uniikkien merkkien määrä viestissä, joka on maksimissaan 256, elimerkkien määrä extended ascii:ssa.
 
 Aikavaativuus: O(_n_ log _n_). huffmanin puuta luodessa pitää lisätä n määrä alkioita heappiin,   
 mikä kestää log _n_ per operaatio, mutta alkioita voi maksimissaan olla 256, jolloin jokainen  
