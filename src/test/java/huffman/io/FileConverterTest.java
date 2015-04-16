@@ -6,6 +6,7 @@ import org.junit.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -22,6 +23,17 @@ public class FileConverterTest {
         @Override
         public byte[] convert(byte[] data) {
            return new byte[] { (byte) 64 };
+        }
+        @Override
+        public String getNewPath(String path) {
+            return path + ".test";
+        }
+    }
+
+    public class DataConverterStubThrowsError implements DataConverter {
+        @Override
+        public byte[] convert(byte[] data) throws UnsupportedEncodingException {
+            throw new UnsupportedEncodingException();
         }
         @Override
         public String getNewPath(String path) {
@@ -49,6 +61,16 @@ public class FileConverterTest {
     @Test
     public void newFileHasCorrectExtension() {
         assertTrue(new File(path + ".test").exists());
+    }
+
+    @Test
+    public void doesNothingIfConverterThrowsError() throws Exception {
+        file = new File(path + "2");
+        file.createNewFile();
+        DataConverter dataConverterStubThrowsError = new DataConverterStubThrowsError();
+        fileConverter.convert(file, dataConverterStubThrowsError);
+        assertTrue(file.exists());
+        assertFalse(new File(path + "2.test").exists());
     }
 
     @Test

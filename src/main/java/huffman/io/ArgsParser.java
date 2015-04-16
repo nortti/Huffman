@@ -20,7 +20,7 @@ public class ArgsParser {
 
         String[] errors = new String[]{ "Incorrect argument #1, expected: 'c' or 'd', was: '" +
                                         args[0] + "'",
-                                     "Invalid argument #2: '" + this.file.getPath() + "' is " +
+                                     "Invalid argument #2: '" + this.file.getPath() + "' is a " +
                                         "directory",
                                      "Invalid argument #2: '" + this.file.getPath() +
                                          "' does not exist",

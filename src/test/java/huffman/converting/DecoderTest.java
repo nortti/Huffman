@@ -23,7 +23,7 @@ public class DecoderTest {
     }
 
     @Test
-    public void decodesCorrectly() {
+    public void decodesCorrectly() throws Exception {
         byte[] inputData = { (byte) 93, (byte) 16, (byte) 11, (byte) 43, (byte) 112 };
         byte[] decoded = decoder.convert(inputData);
         byte[] correctData = { (byte) 116, (byte) 101, (byte) 116, (byte) 101 };

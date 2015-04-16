@@ -23,10 +23,15 @@ public class EncoderTest {
     }
 
     @Test
-    public void encodesCorrectly() {
+    public void encodesCorrectly() throws Exception {
         byte[] data = encoder.convert("tete".getBytes());
         byte[] correctData = { (byte) 93, (byte) 16, (byte) 11, (byte) 43, (byte) 112 };
         assertArrayEquals(correctData, data);
 
+    }
+
+    @Test
+    public void setsNewPathCorrectly() {
+        assertEquals(encoder.getNewPath("test"), "test.huf");
     }
 }

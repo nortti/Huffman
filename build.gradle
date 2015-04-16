@@ -5,6 +5,8 @@ apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'eclipse'
 apply plugin: 'checkstyle'
+apply plugin: 'jacoco'
+
 
 mainClassName = "huffman/Main"
 
@@ -14,6 +16,17 @@ run {
     }
 }
 
+jacoco {
+    toolVersion = "0.7.1.201405082137"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination "${buildDir}/jacocoHtml"
+    }
+}
 
 dependencies {
   testCompile group: 'junit', name: 'junit', version: '4.11'

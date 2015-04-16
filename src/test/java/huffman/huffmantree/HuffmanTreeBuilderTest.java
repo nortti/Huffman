@@ -9,7 +9,18 @@ public class HuffmanTreeBuilderTest {
     HuffmanTreeBuilder huffmanTreeBuilder = new HuffmanTreeBuilder();
 
     @Test
-    public void makesACorrectTree() {
+    public void throwsErrorWhenNonAsciiChars() {
+        boolean noError = true;
+        byte[] data = { (byte) 255, (byte) 255 };
+        try {
+            huffmanTreeBuilder.makeTree(data);
+        } catch (Exception e) {
+            noError = false;
+        }
+        assertFalse(noError);
+    }
+    @Test
+    public void makesACorrectTree() throws Exception {
         byte[] data = { (byte) 116, (byte) 101, (byte) 116, (byte) 101 }; // "tete"
         HuffmanTree huffmanTree = huffmanTreeBuilder.makeTree(data);
         // The tree will contain two leaves of freq = 2 and one leaf of freq = 0 (EOF char).

@@ -13,7 +13,19 @@ public class HuffmanTreeRebuilderTest {
                                 new Node('e', 0)));
 
     @Test
-    public void makesACorrectTree() {
+    public void throwsExceptionWhenBadData() {
+        // 111111111
+        byte[] data = { (byte) 255, (byte) 255 };
+        boolean noError = true;
+        try {
+        huffmanTreeRebuilder.makeTree(data);
+        } catch (Exception e) {
+            noError = false;
+        }
+        assertFalse(noError);
+    }
+    @Test
+    public void makesACorrectTree() throws Exception {
         // 0 1 01110100 0 1 00000000 1 01100101000
         byte[] data = { (byte) 93, (byte) 16, (byte) 11, (byte) 40 };
         HuffmanTree huffmanTree = huffmanTreeRebuilder.makeTree(data);
