@@ -31,7 +31,7 @@ edellisestä linkistä löytyvän purkamisalgoritmin avulla. **Decoder** voi sit
 
 ### Saavutetut aika- ja tilavaativuudet
 
-_n_ on uniikkien merkkien määrä viestissä, joka on maksimissaan 256, elimerkkien määrä extended ascii:ssa.
+_n_ on uniikkien merkkien määrä viestissä, joka on maksimissaan 256, eli merkkien määrä extended ascii:ssa.
 
 Aikavaativuus: O(_n_ log _n_). huffmanin puuta luodessa pitää lisätä n määrä alkioita heappiin,   
 mikä kestää log _n_ per operaatio, mutta alkioita voi maksimissaan olla 256, jolloin jokainen  
