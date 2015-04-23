@@ -71,12 +71,13 @@ public class FileConverterTest {
         fileConverter.convert(file, dataConverterStubThrowsError);
         assertTrue(file.exists());
         assertFalse(new File(path + "2.test").exists());
+        file.delete();
     }
 
     @Test
     public void newFileHasCorrectData() throws IOException {
-    byte[] data = Files.readAllBytes(Paths.get(path + ".test"));
-    assertArrayEquals(data, new byte[] { (byte) 64 });
+        byte[] data = Files.readAllBytes(Paths.get(path + ".test"));
+        assertArrayEquals(data, new byte[] { (byte) 64 });
     }
 
     @After

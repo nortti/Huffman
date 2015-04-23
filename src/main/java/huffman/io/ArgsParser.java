@@ -2,7 +2,9 @@ package huffman.io;
 
 import java.io.File;
 
-// Class is work in progress (missing javadoc and tests)
+/**
+ * Validates the user arguments and holds the information needed for file conversion.
+ */
 
 public class ArgsParser {
 
@@ -10,6 +12,10 @@ public class ArgsParser {
     File file;
     String errorMessage;
 
+    /** 
+     * Validates the args, and upon failed validating sets an appropriate error message.
+     * @return boolean true if args were valid
+     */
     public boolean parse(String[] args) {
         if (args.length != 2) {
             this.errorMessage = "Wrong number of args, expected: 2, was: " + args.length;
