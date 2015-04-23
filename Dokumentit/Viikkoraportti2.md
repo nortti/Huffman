@@ -2,9 +2,9 @@
 
 #### Tekemiset, edistyminen
 
-Ohjelman yleinen struktuuri (rajapintoja)
-Testit
-Javadoc ja kommentointi
+Ohjelman yleinen struktuuri (rajapintoja) 
+Testit 
+Javadoc ja kommentointi 
 Checkstyle
 
 #### Mitä opin
