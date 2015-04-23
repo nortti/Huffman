@@ -8,11 +8,18 @@ import huffman.datastructures.Node;
 import huffman.huffmantree.HuffmanTree;
 import huffman.huffmantree.HuffmanTreeMaker;
 
+/**
+ * Tests the functionality of the Encoder class.
+ */
 public class EncoderTest {
 
     HuffmanTreeMakerStub huffmanTreeMakerStub = new HuffmanTreeMakerStub();
     Encoder encoder = new Encoder(huffmanTreeMakerStub);
 
+    /**
+     * A stub to remove the dependency of the HuffmanTreeBuilder class. Returns a simple
+     * huffman tree with three leaves.
+     */
     public class HuffmanTreeMakerStub implements HuffmanTreeMaker {
         @Override
         public HuffmanTree makeTree(byte[] data) {
@@ -22,6 +29,10 @@ public class EncoderTest {
         }
     }
 
+    /**
+     * Checks if the decoder, that uses a stub to replace HuffmanTreeBuilder, encodes a
+     * string correctly.
+     */
     @Test
     public void encodesCorrectly() throws Exception {
         byte[] data = encoder.convert("tete".getBytes());
@@ -30,6 +41,9 @@ public class EncoderTest {
 
     }
 
+    /**
+     * A very simple test to check that getNewPath does indeed return 'parameter + .huf'.
+    */
     @Test
     public void setsNewPathCorrectly() {
         assertEquals(encoder.getNewPath("test"), "test.huf");
