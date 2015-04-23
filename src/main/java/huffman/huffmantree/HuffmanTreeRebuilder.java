@@ -30,7 +30,8 @@ public class HuffmanTreeRebuilder implements HuffmanTreeMaker {
      * alrorithm in the link above
      * @return The root of the tree
      */
-    private static Node decodeTreeFromData(BitInputStream bitInputStream) throws UnsupportedEncodingException {
+    private static Node decodeTreeFromData(BitInputStream bitInputStream)
+                                           throws UnsupportedEncodingException {
         boolean isSet = bitInputStream.readBit();
         if (isSet) {
             char character = (char) bitInputStream.readByte();

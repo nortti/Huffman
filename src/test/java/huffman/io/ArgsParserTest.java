@@ -2,11 +2,11 @@ package huffman.io;
 
 import static org.junit.Assert.*;
 
+import org.junit.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-
-import org.junit.*;
 
 /**
  * Checks the functionality of the ArgsParser class.
@@ -32,9 +32,11 @@ public class ArgsParserTest {
     @Test
     public void worksCorrectlyWithWrongNumberOfArgs() {
         assertFalse(argsParser.parse(new String[] {}));
-        assertTrue(argsParser.getErrorMessage().equals("Wrong number of args, expected: 2, was: 0"));
+        assertTrue(argsParser.getErrorMessage().equals("Wrong number of args, "
+                                                       + "expected: 2, was: 0"));
         assertFalse(argsParser.parse(new String[] { "1", "2", "3"}));
-        assertTrue(argsParser.getErrorMessage().equals("Wrong number of args, expected: 2, was: 3"));
+        assertTrue(argsParser.getErrorMessage().equals("Wrong number of args, "
+                                                       + "expected: 2, was: 3"));
     }
 
     /**
@@ -44,7 +46,8 @@ public class ArgsParserTest {
     @Test
     public void worksCorrectlyWhenFirstArgIsntRight() {
         assertFalse(argsParser.parse(new String[] { "a", "validfile" }));
-        assertTrue(argsParser.getErrorMessage().equals("Incorrect argument #1, expected: 'c' or 'd', was: 'a'"));
+        assertTrue(argsParser.getErrorMessage().equals("Incorrect argument #1, expected: "
+                                                       + "'c' or 'd', was: 'a'"));
     }
 
     /**
@@ -54,7 +57,8 @@ public class ArgsParserTest {
     @Test
     public void worksCorrectlyWhenFileDoesntExist() {
         assertFalse(argsParser.parse(new String[] { "c", "nothing" }));
-        assertTrue(argsParser.getErrorMessage().equals("Invalid argument #2: 'nothing' does not exist"));
+        assertTrue(argsParser.getErrorMessage().equals("Invalid argument #2: "
+                                                       + "'nothing' does not exist"));
     }
 
     /**
@@ -78,7 +82,8 @@ public class ArgsParserTest {
         File file = new File("empty");
         file.createNewFile();
         assertFalse(argsParser.parse(new String[] { "c", "empty" }));
-        assertTrue(argsParser.getErrorMessage().equals("Invalid argument #2: 'empty' empty files can not be converted"));
+        assertTrue(argsParser.getErrorMessage().equals("Invalid argument #2: 'empty' "
+                                                       + "empty files can not be converted"));
         file.delete();
     }
 
