@@ -2,7 +2,7 @@
 
 #### Tekemiset, edistyminen
 
-Javadocit testeihin, sekä suorituskykytestaus.
+Javadocit testeihin, sekä suorituskykytestaus. Kirjoitin myös testausdokumentin paljon kattavammaksi.
 
 #### Mitä opin
 
