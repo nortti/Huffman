@@ -27,6 +27,18 @@ jacocoTestReport {
     }
 }
 
+uploadArchives {
+    repositories {
+       flatDir {
+           dirs 'repos'
+       }
+    }
+}
+jar {
+    manifest {
+        attributes 'Main-Class': 'huffman.Main'
+    }
+}
 dependencies {
   testCompile group: 'junit', name: 'junit', version: '4.11'
 }
