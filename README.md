@@ -9,5 +9,5 @@ To compress the file example.txt:
 To decompress the file example.txt.huf
 
   ```sh
-    $ java -jar Huffman.jar d example.txt.huf
+  $ java -jar Huffman.jar d example.txt.huf
 ```
