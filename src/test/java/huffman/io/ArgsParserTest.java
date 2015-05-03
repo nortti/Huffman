@@ -94,7 +94,7 @@ public class ArgsParserTest {
     @Test
     public void worksWhenBothArgsAreValid() {
         assertTrue(argsParser.parse(new String[] { "c", "validfile" }));
-        assertTrue(argsParser.getIsCompressing() == true);
+        assertTrue(argsParser.getIsCompressing());
         assertTrue(argsParser.getFile().getName() == "validfile");
     }
 

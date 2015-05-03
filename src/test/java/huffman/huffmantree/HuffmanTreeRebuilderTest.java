@@ -21,8 +21,7 @@ public class HuffmanTreeRebuilderTest {
      */
     @Test
     public void throwsExceptionWhenBadData() {
-        // 111111111
-        byte[] data = { (byte) 255, (byte) 255 };
+        byte[] data = { 0, 0 };
         boolean noError = true;
         try {
         huffmanTreeRebuilder.makeTree(data);

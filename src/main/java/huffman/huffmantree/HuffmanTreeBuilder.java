@@ -20,7 +20,7 @@ public class HuffmanTreeBuilder implements HuffmanTreeMaker {
     public HuffmanTree makeTree(byte[] data) throws UnsupportedEncodingException {
         int[] charFreqs;
         try {
-        charFreqs = countCharFreqs(data);
+        charFreqs = countCharFreqs(new String(data));
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new UnsupportedEncodingException();
         }
@@ -33,10 +33,10 @@ public class HuffmanTreeBuilder implements HuffmanTreeMaker {
      * Creates a character-frequency lookup table.
      * @throws ArrayIndexOutOfBoundsException if a non-ascii character is found
      */
-    private static int[] countCharFreqs(byte[] data) throws ArrayIndexOutOfBoundsException {
+    private static int[] countCharFreqs(String string) throws ArrayIndexOutOfBoundsException {
         int[] charFreqs = new int[CHARSET_SIZE];
-        for (byte charByte : data) {
-            charFreqs[(char) charByte]++;
+        for (int i = 0; i < string.length(); i++) {
+            charFreqs[string.charAt(i)]++;
         }
         return charFreqs;
     }

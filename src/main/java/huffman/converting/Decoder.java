@@ -37,7 +37,7 @@ public class Decoder implements DataConverter {
     }
 
     private void writeDecodedMessage(Node root, BitInputStream inputStream,
-                                     ByteArrayOutputStream outputStream) {
+                                     ByteArrayOutputStream outputStream) throws UnsupportedEncodingException {
         while (true) {
             // Get next character to be written
             char nextCharacter = findCharacter(root, inputStream);
@@ -55,7 +55,7 @@ public class Decoder implements DataConverter {
      * Uses recursion to find a character starting from the root and moving left/right according to
      * the bits read in the bit input stream until a leaf node is reached.
      */
-    private char findCharacter(Node node, BitInputStream bitInputStream) {
+    private char findCharacter(Node node, BitInputStream bitInputStream) throws UnsupportedEncodingException {
         if (node.getLeftChild() == null) { // Is leaf
             return node.getCharacter();
         } else if (bitInputStream.readBit() == true) {

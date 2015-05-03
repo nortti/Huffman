@@ -30,7 +30,7 @@ public class Encoder implements DataConverter {
 
         // Write a binary representation of the tree, followed by the encoded message.
         writeEncodedTree(huffmanTree.getRoot(), bitOutputStream);
-        writeEncodedMessage(inputData, huffmanTree, bitOutputStream);
+        writeEncodedMessage(new String(inputData), huffmanTree, bitOutputStream);
 
         return bitOutputStream.toByteArray();
     }
@@ -52,11 +52,10 @@ public class Encoder implements DataConverter {
     /**
      * Uses the huffman codes to write out the full original data to the bit output stream.
      */
-    private static void writeEncodedMessage(byte[] data, HuffmanTree huffmanTree,
+    private static void writeEncodedMessage(String string, HuffmanTree huffmanTree,
                                             BitOutputStream bitOutputStream) {
-        for (byte characterByte : data) { // For each character in the message
-            char character = (char) characterByte;
-            String code = huffmanTree.getCode(character); // Get the huffman encoding
+        for (int i = 0; i < string.length(); i++) { // For each character in the message
+            String code = huffmanTree.getCode(string.charAt(i)); // Get the huffman encoding
             writeEncodedChar(code, bitOutputStream); // And write it
         }
         writeEncodedChar(huffmanTree.getCode((char) 0), bitOutputStream); // add an EOF code

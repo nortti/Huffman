@@ -35,9 +35,6 @@ public class HuffmanTreeRebuilder implements HuffmanTreeMaker {
         boolean isSet = bitInputStream.readBit();
         if (isSet) {
             char character = (char) bitInputStream.readByte();
-            if ((int) character > 256) {
-                throw new UnsupportedEncodingException();
-            }
             return new Node(character, 0);
         } else {
             Node leftChild = decodeTreeFromData(bitInputStream);

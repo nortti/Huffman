@@ -1,5 +1,7 @@
 package huffman.io;
 
+import java.io.UnsupportedEncodingException;
+
 public class BitInputStream {
 
     private byte[] data;
@@ -14,24 +16,24 @@ public class BitInputStream {
      */
     private int mask = 128;
 
-    public BitInputStream(byte[] data) {
+    public BitInputStream(byte[] data) throws UnsupportedEncodingException {
         this(data, 0);
     }
 
     /**
      * Constructor which skips a portion of the bits in data.
      */
-    public BitInputStream(byte[] data, int startBit) {
+    public BitInputStream(byte[] data, int startBit) throws UnsupportedEncodingException {
         this.data = data;
         // First skips full bytes
         bytePointer += Math.floor(startBit / 8);
         // Then the remaining bits
         for (int i = 0; i < startBit % 8; i++) {
-            readBit();
+            this.readBit();
         }
     }
 
-    public boolean readBit() {
+    public boolean readBit() throws UnsupportedEncodingException {
         // First read next bit with the help of mask
         boolean isSet = (data[bytePointer] & mask) != 0;
         // Shift mask right for next bit
@@ -44,14 +46,14 @@ public class BitInputStream {
         return isSet;
     }
 
-    public int readByte() {
-        byte aByte = 0;
+    public int readByte() throws UnsupportedEncodingException {
+        int value = 0;
         // Use read() 8 times and using 2^i to increment aByte accordingly
         for (int i = 7; i >= 0; i--) {
             if (this.readBit()) {
-                aByte += Math.pow(2, i);
+                value += Math.pow(2, i);
             }
         }
-        return aByte;
+        return value;
     }
 }
